@@ -1,47 +1,5 @@
 
 $(document).ready(function(e) {
-	$('.with-hover-text, .regular-link').click(function(e){
-		e.stopPropagation();
-	});
-	
-	/***************
-	* = Hover text *
-	* Hover text for the last slide
-	***************/
-	$('.with-hover-text').hover(
-		function(e) {
-			$(this).css('overflow', 'visible');
-			$(this).find('.hover-text')
-				.show()
-				.css('opacity', 0)
-				.delay(200)
-				.animate(
-					{
-						paddingTop: '25px',
-						opacity: 1
-					},
-					'fast',
-					'linear'
-				);
-		},
-		function(e) {
-			var obj = $(this);
-			$(this).find('.hover-text')
-				.animate(
-					{
-						paddingTop: '0',
-						opacity: 0
-					},
-					'fast',
-					'linear',
-					function() {
-						$(this).hide();
-						$( obj ).css('overflow', 'hidden');
-					}
-				);
-		}
-	);
-	
 	var img_loaded = 0;
 	var j_images = [];
 	
@@ -251,60 +209,4 @@ jQuery(document).ready(function ($) {
 			$('.zoom').remove();
 		}
 	);
-});
-
-/******************
-* = Arrows click  *
-******************/
-jQuery(document).ready(function ($) {
-	//Cache some variables
-	var arrows = $('#arrows div');
-	
-	arrows.click(function(e) {
-		e.preventDefault();
-		
-		if ( $(this).hasClass('disabled') )
-			return;
-		
-		var slide = null;
-		var datasheet = $('.nav > li.active').data('slide');
-		var offset_top = false;
-		var offset_left = false;
-		
-		
-		switch( $(this).attr('id') ) {
-			case 'arrow-up':
-				offset_top = ( datasheet - 1 == 1 ) ? '0px' : $('.slide[data-slide="' + (datasheet-1) + '"]').offset().top;
-				break;
-			case 'arrow-down':
-				offset_top = $('.slide[data-slide="' + (datasheet+1) + '"]').offset().top;
-				break;
-			case 'arrow-left':
-				offset_left = $('#projects .row').offset().left + 452;
-				if ( offset_left > 0 ) {
-					offset_left = '0px';
-				}
-				break;
-			case 'arrow-right':
-				offset_left = $('#projects .row').offset().left - 452;
-				if ( offset_left < $('body').width() - $('#projects .row').width() ) {
-					offset_left = $('body').width() - $('#projects .row').width();
-				}
-				break;
-		}
-		
-		if ( offset_top != false ) {
-			htmlbody.stop(false, false).animate({
-				scrollTop: offset_top
-			}, 1500, 'easeInOutQuart');
-		}
-		
-		if ( offset_left != false ) {
-			if ( $('#projects .row').width() != $('body').width() ) {
-				$('#projects .row').stop(false, false).animate({
-					left: offset_left
-				}, 1500, 'easeInOutQuart');
-			}
-		}
-	});
 });

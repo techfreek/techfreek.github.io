@@ -80,9 +80,21 @@
 	.link {
 		display: inline-block;
 		padding: 50px;	
+		overflow: hidden;
 	}
-	.link p a i {
-		font-size: 500%;
+	.col-3 p a i {
+		font-size: 1000%;
+		padding-top: 50px;	
+		overflow: hidden;
+	}
+	.link:hover {
+		overflow: visible;
+	}
+	.link:hover > hover-text {
+		display: block;
+	}
+	hover-text {
+		display: none;
 	}
 
 

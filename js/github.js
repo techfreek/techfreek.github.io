@@ -18,7 +18,6 @@ function countLanguageUse(repos) {
 		}
 		langs[repos[i].language] += 1;
 	}
-	console.log("langs: " + JSON.stringify(langs));
 	return langs;
 }
 
@@ -26,8 +25,6 @@ function addBars(languages) {
 	var langs = document.getElementById('langs');
 	var maxProjects = 10;
 	var objs = Object.keys(languages);
-	console.log("langs: " + JSON.stringify(languages))
-	console.log("objs: " + JSON.stringify(objs));
 
 	objs.forEach(function(lang) {
 		if(lang === "null") {
@@ -111,7 +108,6 @@ function addActivity(activities) {
 				'<br>' +
 				activity.payload.issue.title;
 		} else if(activity.type === "WatchEvent") {
-			console.log("WatchEvent: " + JSON.stringify(activity))
 			td.innerHTML = activity.actor.login +
 				" starred " +
 				activity.repo.name;
