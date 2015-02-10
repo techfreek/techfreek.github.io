@@ -49,14 +49,14 @@ $(document).ready(function(e) {
 	* = Controls active menu *
 	* Hover text for the last slide
 	*************************/
-	$('#slide-3 img').each(function(index, element) {
+	$('#projects img').each(function(index, element) {
 		var time = new Date().getTime();
 		var oldHref = $(this).attr('src');
 		var myImg = $('<img />').attr('src', oldHref + '?' + time );
 		
 		myImg.load(function(e) {
 			img_loaded += 1;;
-			if ( img_loaded == $('#slide-3 img').length ) {
+			if ( img_loaded == $('#projects img').length ) {
 				$(function() {
 					var pause = 10;
 					$(document).scroll(function(e) {
@@ -96,7 +96,7 @@ $(function() {
 	var pause = 50; // will only process code within delay(function() { ... }) every 100ms.
 	$(window).resize(function() {
 		delay(function() {
-				var gallery_images = $('#slide-3 img');
+				var gallery_images = $('#projects img');
 				
 				var images_per_row = 0;
 				if ( gallery_images.length % 2 == 0 ) {
@@ -105,18 +105,18 @@ $(function() {
 					images_per_row = gallery_images.length / 2 + 1;
 				}
 				
-				var gallery_width = $('#slide-3 img').width() * $('#slide-3 img').length;
+				var gallery_width = $('#projects img').width() * $('#projects img').length;
 				gallery_width /= 2;
-				if ( $('#slide-3 img').length % 2 != 0 ) {
-					gallery_width += $('#slide-3 img').width();
+				if ( $('#projects img').length % 2 != 0 ) {
+					gallery_width += $('#projects img').width();
 				}
 				
-				$('#slide-3 .row').css('width', gallery_width );
+				$('#projects .row').css('width', gallery_width );
 				
-				var left_pos = $('#slide-3 .row').width() - $('body').width();
+				var left_pos = $('#projects .row').width() - $('body').width();
 				left_pos /= -2;
 				
-				$('#slide-3 .row').css('left', left_pos);
+				$('#projects .row').css('left', left_pos);
 			
 			},
 			pause
@@ -134,26 +134,10 @@ var delay = (function(){
 })();
 
 function menu_focus( element, i ) {
-	if ( $(element).hasClass('active') ) {
-		if ( i == 6 ) {
-			if ( $('.navbar').hasClass('inv') == false )
-				return;
-		} else {
-			return;
-		}
-	}
-	
-	enable_arrows( i );
-		
-	if ( i == 1 || i == 6 )
-		$('.navbar').removeClass('inv');
-	else
-		$('.navbar').addClass('inv');
-	
 	$('.nav > li').removeClass('active');
 	$(element).addClass('active');
 	
-	var icon = $(element).find('.icon');
+	var icon = $(element).find('.fa');
 	
 	var left_pos = icon.offset().left - $('.nav').offset().left;
 	var el_width = icon.width() + $(element).find('.text').width() + 10;
@@ -166,20 +150,6 @@ function menu_focus( element, i ) {
 		1500,
 		'easeInOutQuart'
 	);
-}
-
-function enable_arrows( dataslide ) {
-	$('#arrows div').addClass('disabled');
-	if ( dataslide != 1 ) {
-		$('#arrow-up').removeClass('disabled');
-	}
-	if ( dataslide != 6 ) {
-		$('#arrow-down').removeClass('disabled');
-	}
-	if ( dataslide == 3 ) {
-		$('#arrow-left').removeClass('disabled');
-		$('#arrow-right').removeClass('disabled');
-	}
 }
 
 /*************
@@ -229,7 +199,7 @@ jQuery(document).ready(function ($) {
 	
 	menu_item.hover(
 		function(e) {
-			var icon = $(this).find('.icon');
+			var icon = $(this).find('.fa');
 			
 			var left_pos = icon.offset().left - $('.nav').offset().left;
 			var el_width = icon.width() + $(this).find('.text').width() + 10;
@@ -252,12 +222,12 @@ jQuery(document).ready(function ($) {
 ******************/
 jQuery(document).ready(function ($) {
 	//Cache some variables
-	var images = $('#slide-3 a');
+	var images = $('#projects a');
 	
 	images.hover(
 		function(e) {
 			var asta = $(this).find('img');
-			$('#slide-3 img').not( asta ).stop(false, false).animate(
+			$('#projects img').not( asta ).stop(false, false).animate(
 				{
 					opacity: .5
 				},
@@ -271,7 +241,7 @@ jQuery(document).ready(function ($) {
 			$(this).prepend(zoom);
 		},
 		function(e) {
-			$('#slide-3 img').stop(false, false).animate(
+			$('#projects img').stop(false, false).animate(
 				{
 					opacity: 1
 				},
@@ -310,15 +280,15 @@ jQuery(document).ready(function ($) {
 				offset_top = $('.slide[data-slide="' + (datasheet+1) + '"]').offset().top;
 				break;
 			case 'arrow-left':
-				offset_left = $('#slide-3 .row').offset().left + 452;
+				offset_left = $('#projects .row').offset().left + 452;
 				if ( offset_left > 0 ) {
 					offset_left = '0px';
 				}
 				break;
 			case 'arrow-right':
-				offset_left = $('#slide-3 .row').offset().left - 452;
-				if ( offset_left < $('body').width() - $('#slide-3 .row').width() ) {
-					offset_left = $('body').width() - $('#slide-3 .row').width();
+				offset_left = $('#projects .row').offset().left - 452;
+				if ( offset_left < $('body').width() - $('#projects .row').width() ) {
+					offset_left = $('body').width() - $('#projects .row').width();
 				}
 				break;
 		}
@@ -330,8 +300,8 @@ jQuery(document).ready(function ($) {
 		}
 		
 		if ( offset_left != false ) {
-			if ( $('#slide-3 .row').width() != $('body').width() ) {
-				$('#slide-3 .row').stop(false, false).animate({
+			if ( $('#projects .row').width() != $('body').width() ) {
+				$('#projects .row').stop(false, false).animate({
 					left: offset_left
 				}, 1500, 'easeInOutQuart');
 			}
