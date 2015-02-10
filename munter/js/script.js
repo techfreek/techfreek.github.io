@@ -97,7 +97,8 @@ function menu_focus( element, i ) {
 	
 	var icon = $(element).find('.fa');
 	
-	var left_pos = icon.offset().left - $('.nav').offset().left;
+	var left_pos = icon.offset().left - 
+		$('.nav').offset().left;
 	var el_width = icon.width() + $(element).find('.text').width() + 10;
 	
 	$('.active-menu').stop(false, false).animate(
