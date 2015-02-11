@@ -76,8 +76,8 @@
 		background-color: #B06903;
 	}
 	#work .container .hr {
-		background-color: #4e4e4e;
-		color: #4e4e4e;
+		background-color: #292929;
+		color: #292929;
 	}
 
 #contact {
@@ -128,6 +128,12 @@
 	}
 	.modal-footer a i:hover {
 		color: #676969;
+	}
+	.modal-body img {
+		padding-bottom: 15px;
+	}
+	.modal-body {
+		font-weight: 400;
 	}
 
 .xlarge {

@@ -26,20 +26,19 @@ function countLanguageUse(repos) {
 		}
 		langs[repos[i].language].count += 1;
 
-		//I had a really old repo with all the debug files still in it. Hence the decrement
+		langs[repos[i].language].value += Math.sqrt(repos[i].size) / 15;
+
 		if(repos[i].language === "C++") {
-			langs[repos[i].language].value += (repos[i].size / 10000);
-		} else {
-			langs[repos[i].language].value += (repos[i].size / 1000);	
+			//I had a really old repo with all the debug files still in it. Hence the decrement
+			langs[repos[i].language].value /= 10;
 		}
-		
 	}
 	return langs;
 }
 
 function addBars(languages) {
 	var langs = document.getElementById('langs');
-	var maxProjects = 10;
+	var maxProjects = 20;
 	var objs = Object.keys(languages);
 
 	objs.forEach(function(lang) {

@@ -1,4 +1,3 @@
-
 $(document).ready(function(e) {
 	var img_loaded = 0;
 	var j_images = [];

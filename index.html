@@ -70,7 +70,7 @@
 			<div id="home-row-1" class="row clearfix">
 				<div class="col-12">
 					<h1 class="font-semibold">Alex Bahm</h1>
-					<h4 class="font-thin">Software Engineer</h4>
+					<h4 class="font-thin">Student and Software Engineer</h4>
 					<br>
 					<br>
 				</div><!-- /col-12 -->
@@ -159,6 +159,17 @@
 			</div>
 
 			<div class="col-xs-12 col-sm-6 col-lg-3">
+				<a class="project" href="images/wheelchair.png"
+									youtube="https://www.youtube.com/watch?v=PT7cHpTEI88&feature=youtu.be">
+					<img class="thumb" src="images/wheelchair.png">
+					<h3>Semi-Autonomous Safety Wheelchair</h3>
+					<figcaption>
+						My Senior Design project at Washington State University it to design and build a software system (along with any hardware) needed to assist in the operation of an electric wheelchair. The project is sponsored by Microsoft and WSU Intelligent Robot Learning Laboratory. The team consists of 4 CS majors and 2 EE majors. Our priorities until graduation are to work on navigation, mapping, and eye tracking.
+					</figcaption>
+				</a>
+			</div>
+
+			<div class="col-xs-12 col-sm-6 col-lg-3">
 				<a class="project" href="images/LEDs.PNG"
 									github="https://github.com/techfreek/ArduinoMusicSyncedLED"
 									youtube="https://www.youtube.com/watch?v=YMNxjDxvUKg">
@@ -166,17 +177,6 @@
 					<h3>Music Synced LEDs</h3>
 					<figcaption>
 						Using an Arduino, Spectrum Analyzer Shield from Bliptronics, and 6ft of RGB LEDs, I created a system that keeps the lights in sync with the song. No configuring for a song, just play it.
-					</figcaption>
-				</a>
-			</div>
-
-			<div class="col-xs-12 col-sm-6 col-lg-3">
-				<a class="project" href="images/wheelchair.png"
-									youtube="https://www.youtube.com/watch?v=PT7cHpTEI88&feature=youtu.be">
-					<img class="thumb" src="images/wheelchair.png">
-					<h3>Semi-Autonomous Safety Wheelchair</h3>
-					<figcaption>
-						My Senior Design project at Washington State University it to design and build a software system (along with any hardware) needed to assist in the operation of an electric wheelchair. The project is sponsored by Microsoft and WSU Intelligent Robot Learning Laboratory. The team consists of 4 CS majors and 2 EE majors. Our priorities until graduation are to work on navigation, mapping, and eye tracking.
 					</figcaption>
 				</a>
 			</div>
@@ -312,12 +312,12 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="modal">
+	<div class="modal fade" id="modal" tabindex="-1">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title"></h4>
+					<h4 class="modal-title font-semibold"></h4>
 				</div>
 				<div class="modal-body">
 					<img src="">
@@ -330,9 +330,9 @@
 
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
+			</div>
+		</div>
+	</div>
 </body>
 
 	<!-- SCRIPTS -->
@@ -348,24 +348,26 @@
 	<!-- fancybox init -->
 	<script>
 		$(document).ready(function(e) {
+			//prevents prevent default on links caused by bootstrap
+			$(document).off('.data-api');
+
 			var lis = $('.nav > li');
 
 			menu_focus( lis[0], 1 );
 
 			$(".project").click(function(event) {
 				event.preventDefault();
-				console.log("Event.target.innerHTML: " + this.innerHTML);
 				openProjectView($(this));
 			});
 
 			/* Github stuff */
-			/*loadRepos('techfreek', function(repos) {
+			loadRepos('techfreek', function(repos) {
 				addBars(countLanguageUse(repos));
 			});
 
 			findActivity('techfreek', function(activities) {
 				addActivity(activities);
-			});*/
+			});
 		});
 	</script>
 
