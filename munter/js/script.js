@@ -96,19 +96,24 @@ function menu_focus( element, i ) {
 	$(element).addClass('active');
 	
 	var icon = $(element).find('.fa');
-	
-	var left_pos = icon.offset().left - 
-		$('.nav').offset().left;
-	var el_width = icon.width() + $(element).find('.text').width() + 10;
-	
-	$('.active-menu').stop(false, false).animate(
-		{
-			left: left_pos,
-			width: el_width
-		},
-		1500,
-		'easeInOutQuart'
-	);
+	var icon_offset = icon.offset();
+	var nav_offset = $('.nav').offset();
+
+	if(typeof(icon_offset) !== "undefined" &&
+		typeof(nav_offset) !== "undefined") {
+
+		var left_pos = icon_offset.left - nav_offset.left;
+		var el_width = icon.width() + $(element).find('.text').width() + 10;
+		
+		$('.active-menu').stop(false, false).animate(
+			{
+				left: left_pos,
+				width: el_width
+			},
+			1500,
+			'easeInOutQuart'
+		);
+	}
 }
 
 /*************

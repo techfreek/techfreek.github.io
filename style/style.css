@@ -110,8 +110,8 @@
 		padding-top: 50px;	
 		overflow: hidden;
 	}
-	.link:hover {
-		overflow: visible;
+	.social:hover {
+		color: #FFF;
 	}
 
 .modal {
