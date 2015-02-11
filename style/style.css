@@ -97,13 +97,19 @@
 	.link:hover {
 		overflow: visible;
 	}
-	.link:hover > hover-text {
-		display: block;
-	}
-	hover-text {
-		display: none;
-	}
 
+.modal {
+		position: fixed !important;
+	}
+	.modal-footer a {
+		color: #474949;
+		vertical-align: middle;
+		float: left;
+		margin: 0 10px;
+	}
+	.modal-footer a i {
+		font-size: 300%;
+	}
 
 .large {
 	font-size: x-large;

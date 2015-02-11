@@ -22,8 +22,9 @@
 	font-weight: 300;
 }
 
-* {
-	position: relative;
+.active-menu,
+.active-menu * {
+	position: relative !important;
 }
 
 .breaker {

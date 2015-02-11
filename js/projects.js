@@ -1,82 +1,68 @@
 function openProjectView(project) {
-	console.log("Value: " + project.val());
+	var options = {
+		youtube: null,
+		github: null,
+		link: null
+	}
+
 	var img = $(project).find("img");
 	var title = $(project).find("h3");
 	var caption = $(project).find("figcaption");
 	
-	title = title.text();
-	console.log("Title: " + title);
-	createProjectModal(title, caption.text(), img.attr("src"));
+	console.log("github: " + $(project).attr("github"));
+
+	options.github = $(project).attr("github") || null;
+	options.youtube = $(project).attr("youtube") || null;
+	options.link = $(project).attr("link") || null;
+	
+	console.log("options: " + JSON.stringify(options));
+	createProjectModal(title.text(), caption.text(), img.attr("src"), options);
 }
 
-function createProjectModal(ProjectTitle, caption, image) {
-	var modal = document.createElement("div");
-	var dialog = document.createElement("div");
-	var content = document.createElement("div");
-	var header = document.createElement("div");
-	var exit = document.createElement("button");
-	var exitWrapper = document.createElement("span");
-	var close = document.createElement("button");
-	var footer = document.createElement("div");
-	var title = document.createElement("h4");
-	var body = document.createElement("div");
-	var bodyp = document.createElement("p");
-	var img = document.createElement("img");
+function createProjectModal(ProjectTitle, caption, image, options) {
+	var modal = $("#modal");
+	var header = modal.find(".modal-header");
+	var footer = modal.find(".modal-footer");
+	var title = header.find("h4");
+	var body = modal.find(".modal-body");
+	var bodyp = body.find("p");
+	var img = body.find("img");
+	var github = footer.find(".github");
+	var youtube = footer.find(".youtube");
+	var link = footer.find(".offsite");
 
-	console.log("caption: " + caption);
 	//Create body of modal
-	img.src = image;
-	bodyp.innerHTML = caption;
-
-	body.className = "modal-body";
-	body.appendChild(img);
-	body.appendChild(bodyp);
+	img.attr("src", image);
+	bodyp.text(caption);
 
 	//create header of modal
-	title.innerHTML = ProjectTitle;
-	title.className = "modal-title";
+	title.text(ProjectTitle);
 
-	exitWrapper.setAttribute("aria-hidden", true);
-	exitWrapper.innerHTML = "&times;";
+	//apply options
+	if(options.github) {
+		github.attr("href", options.github);
+		github.css("display", "inline-block");
+	} else {
+		github.css("display", "none");
+	}
 
-	exit.appendChild(exitWrapper);
-	exit.setAttribute("type", "button");
-	exit.className = "close";
-	exit.setAttribute("type", "button");
-	exit.setAttribute("data-dismiss", "modal");
-	exit.setAttribute("aria-label", "Close");
+	if(options.youtube) {
+		youtube.attr("href", options.youtube);
+		youtube.css("display", "inline-block");
+	} else {
+		youtube.css("display", "none");
+	}
 
-	header.appendChild(exit);
-	header.appendChild(title);
+	if(options.link) {
+		link.attr("href", options.link);
+		link.css("display", "inline-block");
+	} else {
+		link.css("display", "none");
+	}
 
-	//create footer
-	footer.className = "modal-footer";
-	close.setAttribute("type", "button");
-	close.className = "btn btn-default";
-	close.setAttribute("data-dismiss", "modal");
-	close.innerHTML = "Close";
-
-	footer.appendChild(close);
-
-
-	//put it all together
-	content.className = "modal-content";
-	content.appendChild(header);
-	content.appendChild(body);
-	content.appendChild(footer);
-
-	dialog.className = "modal-dialog";
-	dialog.appendChild(content);
-	modal.className = "modal fade";
-	modal.id = "modal";
-	modal.appendChild(dialog);
-
-	console.log("Adding modal to body");
-	document.body.appendChild(modal);
 	$('#modal').modal({
-		keyboard: true,
 		show: true
-	})
+	});
 }
 
 function deleteModal() {
