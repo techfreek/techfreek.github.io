@@ -18,7 +18,20 @@
 		padding: 0;
 		text-align: left;
 		width: 100%;
-	}
+	
+		/* padding: 0 !important; */
+}
+
+.project img {
+    height: 200px;
+}
+
+#projects .col-lg-3,
+#projects .col-xs-12,
+#projects .col-sm-6 {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
 	#projects .row {
 		left: 0 !important;
 		margin: 0;
@@ -29,12 +42,11 @@
 		height: 451px;
 		margin: 0;
 		padding: 0;
-		width: 452px;
 	}
 	#projects a,
 	#projects img {
 		display: inline-block;
-		height: 100%;
+		height: 500px;
 		margin: 0 auto;
 		width: 100%;
 	}
@@ -63,9 +75,9 @@
 #work {
 		background-color: #B06903;
 	}
-	#work .line-row .hr {
-		background-color: #222;
-		color: #222;
+	#work .container .hr {
+		background-color: #4e4e4e;
+		color: #4e4e4e;
 	}
 
 #contact {
@@ -89,7 +101,11 @@
 		padding: 50px;	
 		overflow: hidden;
 	}
-	.col-3 p a i {
+	.links .social {
+		width: 24%; /* Has to be 19 because on 20, it rounds over */
+		display: inline-block;
+	}
+	.links .social p a i {
 		font-size: 1000%;
 		padding-top: 50px;	
 		overflow: hidden;
@@ -110,13 +126,28 @@
 	.modal-footer a i {
 		font-size: 300%;
 	}
+	.modal-footer a i:hover {
+		color: #676969;
+	}
+
+.xlarge {
+	font-size: 250%;
+}
 
 .large {
-	font-size: x-large;
+	font-size: 200%;
 }
 
 .big {
-	font-size: large;
+	font-size: 150%;
+}
+
+.small {
+	font-size: 75%;
+}
+
+.xsmall {
+	font-size: 50%;
 }
 
 .nav li a i.fa {
@@ -124,8 +155,9 @@
 }
 
 .title-row {
-	font-size: 45px;
-	padding-bottom: 50px;
+	font-size: 40px;
+	padding-bottom: 35px;
+	padding-top: 20px;
 }
 
 .line-row .hr {
@@ -136,11 +168,18 @@
 }
 
 .subtitle-row {
-	font-size: 35px;
-	padding-bottom: 40px;
-	padding-top: 40px;
+	font-size: 30px;
+	padding-bottom: 20px;
 }
 
 .content-row {
 	padding-top: 45px;
+}
+
+.hr {
+    width: 50%;
+    margin: 0 auto;
+    background-color: #e4e6e5;
+    height: 5px;
+    margin-bottom: 15px;
 }

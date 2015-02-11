@@ -5,8 +5,14 @@ function loadRepos(uname, callback) {
 
 function countLanguageUse(repos) {
 	var langs = {
-		JavaScript: 2,
-		Arduino: 1
+		JavaScript: {
+			count: 2,
+			value: 4
+		},
+		Arduino: {
+			count: 1,
+			value: 1
+		}
 	};
 	//These two start preset because of hidden repos
 
@@ -14,9 +20,19 @@ function countLanguageUse(repos) {
 
 	for(var i = 0; i < repos.length; i++) {
 		if(typeof(langs[repos[i].language]) === 'undefined') {
-			langs[repos[i].language] = 0;
+			langs[repos[i].language] = {};
+			langs[repos[i].language].count = 0;
+			langs[repos[i].language].value = 0;
 		}
-		langs[repos[i].language] += 1;
+		langs[repos[i].language].count += 1;
+
+		//I had a really old repo with all the debug files still in it. Hence the decrement
+		if(repos[i].language === "C++") {
+			langs[repos[i].language].value += (repos[i].size / 10000);
+		} else {
+			langs[repos[i].language].value += (repos[i].size / 1000);	
+		}
+		
 	}
 	return langs;
 }
@@ -35,13 +51,13 @@ function addBars(languages) {
 		var wrapper = document.createElement('div');
 		var graph = document.createElement('div');
 		var innerGraph = document.createElement('span');
-		var percent = ((languages[lang] / maxProjects) * 100);
+		var percent = ((languages[lang].value / maxProjects) * 100);
 
-		innerGraph.innerHTML = languages[lang] + ' projects';
+		innerGraph.innerHTML = languages[lang].count + ' project(s)';
 		
 		graph.setAttribute('aria-valuemin', 0);
 		graph.setAttribute('aria-valuemax', maxProjects);
-		graph.setAttribute('aria-valuenow', languages[lang]);
+		graph.setAttribute('aria-valuenow', languages[lang].count);
 		graph.setAttribute('role', 'progressbar')
 		graph.style.width = percent + '%'; 
 
@@ -75,6 +91,7 @@ function addActivity(activities) {
 		var activity = activities[i];
 		var row = document.createElement('tr');
 		var td = document.createElement('td');
+		
 		if(activity.type === "PushEvent") {
 			var refs = activity.payload.ref.split('/');
 			if(activity.payload.commits[0].message.length > 50) {
@@ -87,7 +104,8 @@ function addActivity(activities) {
 				" pushed to " +
 				refs[refs.length - 1] +
 				" at " +
-				activity.repo.name.link(activity.payload.commits[0].url) +
+				activity.repo.name.link(activity.payload.commits[0].url
+					.replace('api.', '').replace('repos/', '')) +
 				'<br>' +
 				activity.payload.commits[0].message;
 		} else if(activity.type === "IssueCommentEvent") {
@@ -101,7 +119,7 @@ function addActivity(activities) {
 
 			td.innerHTML = activity.actor.login +
 				" commented on issue " +
-				issueComment.link(activity.comment.url) +
+				issueComment.link(activity.issue.html_url) +
 				'<br>' +
 				activity.comment.body.message;
 		} else if(activity.type === "IssuesEvent") {
@@ -109,13 +127,13 @@ function addActivity(activities) {
 
 			td.innerHTML = activity.actor.login +
 				" opened issue " +
-				issueComment.link(activity.issue.url) +
+				issueComment.link(activity.issue.html_url) +
 				'<br>' +
 				activity.payload.issue.title;
 		} else if(activity.type === "WatchEvent") {
 			td.innerHTML = activity.actor.login +
 				" starred " +
-				activity.repo.name.link(activity.repo.url);
+				activity.repo.name.link('http://github.com/' + activity.repo.name);
 		}
 
 		row.appendChild(td);

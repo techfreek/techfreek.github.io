@@ -11,7 +11,7 @@
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	
 	<link rel="stylesheet" type="text/css" href="munter/css/style.css">	
-	<link rel="stylesheet" type="text/css" href="style/style.css">	
+	<link rel="stylesheet" type="text/css" href="style/style.css">
 	
 	<link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,600,300,200&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 	
@@ -36,18 +36,23 @@
 					<li data-slide="1" class="col-12 col-sm-2">
 						<a href="#cover"><i class="fa fa-home"></i><span class="text">HOME</span></a>
 					</li>
+
 					<li data-slide="2" class="col-12 col-sm-2">
 						<a href="#about-me"><i class="fa fa-user"></i><span class="text">ABOUT ME</span></a>
 					</li>
+
 					<li data-slide="3" class="col-12 col-sm-2">
 						<a href="#projects"><i class="fa fa-code"></i></span> <span class="text">PROJECTS</span></a>
 					</li>
+
 					<li data-slide="5" class="col-12 col-sm-2">
 						<a href="#education"><i class="fa fa-graduation-cap"></i></span> <span class="text">EDUCATION</span></a>
 					</li>
+
 					<li data-slide="6" class="col-12 col-sm-2">
 						<a href="#work"><i class="fa fa-building-o"></i> <span class="text">WORK EXPERIENCE</span></a>
 					</li>
+
 					<li data-slide="6" class="col-12 col-sm-2">
 						<a href="#contact"><i class="fa fa-envelope-o"></i><span class="text">CONTACT</span></a>
 					</li>
@@ -82,17 +87,23 @@
 	<div class="slide story" id="about-me" data-slide="2">
 		<div class="container">
 			<div class="row title-row">
-				<div class="col-12 font-semibold large">About Me</div>
+				<div class="col-12 font-semibold">About Me</div>
 			</div>
-			<div class="row line-row">
-				<div class="hr">&nbsp;</div>
-			</div><!-- /row -->
+			<div class="hr">&nbsp;</div>
 			<div class="row subtitle-row">
-				<div class="col-12 font-light big">Alex is a senior in computer science at Washington State University. He is currently an active member of the Linux Users Group, ACM, and Computer Security group on campus. In his free time, he enjoys works on programming projects, listening to music, and snowboarding. A significant portion of Alex's childhood was spent volunteering at Issaquah Salmon Days and with the Boy Scouts of America. He is not only an Eagle Scout, but also has helped lead his team at Salmon Days to get multiple international awards for their work. Alex is a hardworking and dedicated individual who is confident in problem-solving and programming.</div>
-			</div><!-- /row -->
-			<div class="col-12 font-semibold large">In The News</div>
+				<div class="col-12 font-light small">
+					<p>
+						I am a senior at Washington State University and am studying Computer Science. I enjoy being involved in clubs on campus such as the Association for Computing Machinery and the Computer Security Group. In addition, I work on side projects in my free time. Most of these projects fall under the realm of web development as that is where my ideas lie. As my github shows, I have plenty of experience outside of web.
+					</p>
+					<p>
+						Outside of school and software development, I have spent the last 16 years volunteering at Issaquah Salmon Days. During that time, I was a co-chair of the Refuse Rangers team for 3 years while I was in high school. While I was a co-chair, my team won numerous international awards for our garbage and recycling program. I am also an Eagle Scout hailing from Troop 571 in Sammamish, WA.
+					</p>
+				</div>
+			</div>
+
+			<div class="col-12 font-semibold xlarge">In The News</div>
 			<div class="row subtitle-row">
-				<div class="col-12 font-light big">
+				<div class="col-12 font-light small">
 					<blockquote class="news">
 						<header>February 8th 2015</header>
 						<a href="http://www.dailyevergreen.com/news/article_98e9d146-b00b-11e4-a96f-4f967109a649.html">An Innovative Showdown</a>
@@ -102,16 +113,14 @@
 						<a href="http://www.dailyevergreen.com/news/article_6d5f6538-80c0-11e4-84a2-7f10653c2e43.html">Phone App-etit</a>
 					</blockquote>
 				</div>
-			</div><!-- /row -->
-			<div class="row content-row">
-			</div><!-- /row -->
-		</div><!-- /container -->
+			</div>
+		</div>
 	</div>
 
 	<!-- === Projects -->
 	<div class="slide story" id="projects" data-slide="3">
 		<div class="row">
-			<div class="col-12 col-sm-6 col-lg-2">
+			<div class="col-xs-12 col-sm-6 col-lg-3">
 				<a class="project" href="images/Tshell.png"
 									github="https://github.com/techfreek/TShell"
 									youtube="https://www.youtube.com/watch?v=zDM_tt0jdEs"
@@ -119,11 +128,24 @@
 					<img class="thumb" src="images/Tshell.png">
 					<h3>TShell</h3>
 					<figcaption>
-						During the WSU EECS Hackathon 2015, me and Cameron Mehl created TShell which is a Twilio interface for a shell running on our server. In other words, you could text our service a shell (BASH) command, we would execute it, and return the response to you. It was written in Go which we learned day of. As shown in the screenshot, it was originally going to be called TwitterShell and provide the same usecase on Twitter. After seeing the Twilio API at the hackathon, we shifted gears.
+						During the WSU EECS Hackathon 2015, Cameron Mehl and I created TShell which is a Twilio interface for a shell running on our server. In other words, you could text our service a shell (BASH) command, we would execute it, and return the response to you. It was written in Go which we learned day of. As shown in the screenshot, it was originally going to be called TwitterShell and provide the same usecase on Twitter. After seeing the Twilio API at the hackathon, we shifted gears.
 					</figcaption>
 				</a>
 			</div>
-			<div class="col-12 col-sm-6 col-lg-2">
+
+			<div class="col-xs-12 col-sm-6 col-lg-3">
+				<a class="project" href="images/hackathon-site.png"
+									github="https://github.com/WSU-ACM/hackathon-site"
+									link="http://hackathon.eecs.wsu.edu">
+					<img class="thumb" src="images/hackathon-site.png">
+					<h3>Hackathon Website</h3>
+					<figcaption>
+						One of my contributions to the 2015 WSU EECS Hackathon was the website. Dylan Powers and I collaborated on the existing site and improved it's functionality, responsiveness, and content. I mostly focused on content, functionality, and the like. A number of these were implemented in server side JavaScript running on a Node.JS process.
+					</figcaption>
+				</a>
+			</div>
+
+			<div class="col-xs-12 col-sm-6 col-lg-3">
 				<a class="project" href="images/isHungry.png"
 									github="https://github.com/techfreek/TShell"
 									youtube="https://www.youtube.com/watch?v=zDM_tt0jdEs"
@@ -135,7 +157,8 @@
 					</figcaption>
 				</a>
 			</div>
-			<div class="col-12 col-sm-6 col-lg-2">
+
+			<div class="col-xs-12 col-sm-6 col-lg-3">
 				<a class="project" href="images/LEDs.PNG"
 									github="https://github.com/techfreek/ArduinoMusicSyncedLED"
 									youtube="https://www.youtube.com/watch?v=YMNxjDxvUKg">
@@ -146,7 +169,19 @@
 					</figcaption>
 				</a>
 			</div>
-			<div class="col-12 col-sm-6 col-lg-2">
+
+			<div class="col-xs-12 col-sm-6 col-lg-3">
+				<a class="project" href="images/wheelchair.png"
+									youtube="https://www.youtube.com/watch?v=PT7cHpTEI88&feature=youtu.be">
+					<img class="thumb" src="images/wheelchair.png">
+					<h3>Semi-Autonomous Safety Wheelchair</h3>
+					<figcaption>
+						My Senior Design project at Washington State University it to design and build a software system (along with any hardware) needed to assist in the operation of an electric wheelchair. The project is sponsored by Microsoft and WSU Intelligent Robot Learning Laboratory. The team consists of 4 CS majors and 2 EE majors. Our priorities until graduation are to work on navigation, mapping, and eye tracking.
+					</figcaption>
+				</a>
+			</div>
+
+			<div class="col-xs-12 col-sm-6 col-lg-3">
 				<a class="project" href="images/hungryWSU.PNG"
 									github="https://github.com/techfreek/hungryWSU">
 					<img class="thumb" src="images/hungryWSU.PNG">
@@ -162,71 +197,86 @@
 	<div class="slide story" id="skills" data-slide="4">
 		<div class="container">
 			<div class="row title-row">
-				<div class="col-12 font-semibold large">Technical Skills</div>
-			</div><!-- /row -->
-			<div class="row line-row">
-				<div class="hr">&nbsp;</div>
-			</div><!-- /row -->
+				<div class="col-12 font-semibold">Technical Skills</div>
+			</div>
+
+			<div class="hr">&nbsp;</div>
+
 			<div class="row">
-				<div class="col-6 font-light big">
+				<div class="col-6 font-light">
 					<div class="row font-semibold large">Languages</div>
 					<div class="col-12" id="langs"></div>
 				</div>
-				<div class="col-6 font-light big">
+				<div class="col-6 font-light">
 					<div class="row font-semibold large">Recent Activity</div>
 					<div class="col-12">
 							<table class="table table-striped" id="github-activity">
-								<tbody id="github-activity-body">
-									
-							</tbody>
+								<tbody id="github-activity-body"></tbody>
 							</table>
 					</div>
 				</div>
-			</div><!-- /row -->
-			<div class="row content-row">
-			</div><!-- /row -->
-		</div><!-- /container -->
+			</div>
+		</div>
 	</div>
 	
 	<div class="slide story" id="education" data-slide="5">
 		<div class="container">
 			<div class="row title-row">
-				<div class="col-12 font-semibold large">Education</div>
-			</div><!-- /row -->
-			<div class="row line-row">
-				<div class="hr">&nbsp;</div>
-			</div><!-- /row -->
+				<div class="col-12 font-semibold">Education</div>
+			</div>
+
+			<div class="hr">&nbsp;</div>
+
 			<div class="row">
-				<div class="col-12 font-light big">
 				<div class="row subtitle-row">
-					<div class="col-12 font-semibold large">Washington State University</div>
-				</div><!-- /row -->
-				I am majoring in Computer Science and getting a minor in Business Admin. I will be graduating Magna Cum Laude. On campus, I am involved with our ACM chapter and the Computer Security Group. In addition, I also played a role in organizing the 2015 WSU EECS Hackathon which was our biggest to date. We doubled the number of attendees and tripled the length (as compared to the previous one). I have been nominated as an Outstanding Sophomore and an Outstanding Senior.</div>
-				<div class="col-sm-1 hidden-sm">&nbsp;</div>
-			</div><!-- /row -->
-			<div class="row content-row">
-			</div><!-- /row -->
-		</div><!-- /container -->
+					<div class="col-12 font-semibold">Washington State University</div>
+					<div class="col-12 font-thin">Expected Graduation: May 2015</div>
+				</div>
+				<p class="big">
+					I am majoring in Computer Science and getting a minor in Business Admin. I will be graduating Magna Cum Laude. On campus, I am involved with our ACM chapter and the Computer Security Group. In addition, I also played a role in organizing the 2015 WSU EECS Hackathon which was ourgest to date. We doubled the number of attendees and tripled the length (as compared to the previous one). I have also been nominated as an Outstanding Sophomore and an Outstanding Senior.
+				</p>
+			</div>
+		</div>
 	</div>
 
 	<div class="slide story" id="work" data-slide="6">
 		<div class="container">
 			<div class="row title-row">
-				<div class="col-12 font-semibold large">Work Experience</div>
-			</div><!-- /row -->
-			<div class="row line-row">
-				<div class="hr">&nbsp;</div>
-			</div><!-- /row -->
-			<br>
+				<div class="col-12 font-semibold">Work Experience</div>
+			</div>
+			
+			<div class="hr">&nbsp;</div>
+
 			<div class="row">
-				<div class="col-12 font-light big">
-					<div class="col-12 font-semibold large">Washington State University</div>
-					There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</div>
-				<div class="col-sm-1 hidden-sm">&nbsp;</div>
-			</div><!-- /row -->
-			<div class="row content-row">
-			</div><!-- /row -->
-		</div><!-- /container -->
+				<div class="col-12 subtitle-row">
+					<div class="col-12 font-semibold">Washington State University</div>
+					<div class="col-12 font-light">Civil &amp; Environmental Engineering</div>
+					<div class="col-12 font-thin">Information Technology 2 - March 2014 -> Present</div>
+				</div>
+				<p class="big">
+					Maintain undergraduate and graduate computer labs and provide support to faculty and staff as needed. Develop new website and software for department use. 
+				</p>
+			</div>
+
+			<div class="row">
+				<div class="col-12 subtitle-row">
+					<div class="col-12 font-semibold">Lake Washington School District</div>
+					<div class="col-12 font-thin">Overhire Theater Technician - February 2009 -> Present</div>
+				</div>
+				<p class="big">
+				</p>
+			</div>
+
+			<div class="row">
+				<div class="col-12 subtitle-row">
+					<div class="col-12 font-semibold">Eurest Dining Services @ Microsoft</div>
+					<div class="col-12 font-thin">Information Technology Intern - Summer 2012, Summer 2013</div>
+				</div>
+				<p class="big">
+					Worked as a team player by attending to support calls, diagnosing, troubleshooting, and implementing solutions.
+				</p>
+			</div>
+		</div>
 	</div>
 
 	<!-- === Slide 7 / Contact === -->
@@ -235,23 +285,27 @@
 			<div class="row title-row">
 				<div class="col-12 font-light">Leave me a message</div>
 			</div>
-			<div class="row line-row">
-				<div class="hr">&nbsp;</div>
-			</div>
+
+			<div class="hr">&nbsp;</div>
+
 			<div class="links" class="row">
-				<div class="col-3">
-					<p><a href="mailto:alexgbahm@gmail.com"><i class="fa fa-envelope-o"></i></a></p>
-					<span class="on-hover font-light ">alexgbahm+website@gmail.com</span></a>
+				<div class="social">
+					<p><a href="mailto:alex@bahm.io"><i class="fa fa-envelope-o"></i></a></p>
+					<span class="on-hover font-light ">alex@bahm.io</span></a>
 				</div>
-				<div class="col-3">
-					<p><a href="#"><i class="fa fa-home"></i></a></p>
-					<span class="on-hover font-light ">Pacific Northwest</span></a>
+
+				<div class="social">
+					<p><a target="_blank" href="https://www.linkedin.com/profile/view?id=237978958&trk=nav_responsive_tab_profile">
+						<i class="fa fa-linkedin"></i></a></p>
+					<span class="on-hover font-light ">Alex Bahm</span></a>
 				</div>
-				<div class="col-3">
+
+				<div class="social">
 					<p><a target="_blank" href="http://github.com/techfreek"><i class="fa fa-github"></i></i></a></p>
 					<span class="on-hover font-light ">techfreek</span></a>
 				</div>
-				<div class="col-3">
+
+				<div class="social">
 					<p><a target="_blank" href="http://twitter.com/Bahmhere"><i class="fa fa-twitter"></i></a></p>
 					<span class="on-hover font-light ">@Bahmhere</span></a>
 				</div>
@@ -305,13 +359,13 @@
 			});
 
 			/* Github stuff */
-			loadRepos('techfreek', function(repos) {
+			/*loadRepos('techfreek', function(repos) {
 				addBars(countLanguageUse(repos));
 			});
 
 			findActivity('techfreek', function(activities) {
 				addActivity(activities);
-			});
+			});*/
 		});
 	</script>
 
