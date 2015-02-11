@@ -87,7 +87,7 @@ function addActivity(activities) {
 				" pushed to " +
 				refs[refs.length - 1] +
 				" at " +
-				activity.repo.name +
+				activity.repo.name.link(activity.payload.commits[0].url) +
 				'<br>' +
 				activity.payload.commits[0].message;
 		} else if(activity.type === "IssueCommentEvent") {
@@ -96,21 +96,26 @@ function addActivity(activities) {
 					activity.comment.body.message.slice(0, 50) +
 					'...';
 			}
+			
+			var issueComment = activity.repo.name + '#' + activity.payload.number;
+
 			td.innerHTML = activity.actor.login +
 				" commented on issue " +
-				activity.repo.name + '#' + activity.payload.number +
+				issueComment.link(activity.comment.url) +
 				'<br>' +
 				activity.comment.body.message;
 		} else if(activity.type === "IssuesEvent") {
+			var issueComment = activity.repo.name + '#' + activity.payload.number;
+
 			td.innerHTML = activity.actor.login +
 				" opened issue " +
-				activity.repo.name + '#' + activity.payload.number +
+				issueComment.link(activity.issue.url) +
 				'<br>' +
 				activity.payload.issue.title;
 		} else if(activity.type === "WatchEvent") {
 			td.innerHTML = activity.actor.login +
 				" starred " +
-				activity.repo.name;
+				activity.repo.name.link(activity.repo.url);
 		}
 
 		row.appendChild(td);
