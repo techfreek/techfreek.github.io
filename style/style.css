@@ -12,7 +12,6 @@
 	}
 
 #projects {
-		background-color: #000;
 		margin: 0 auto;
 		overflow: hidden;
 		padding: 0;
@@ -20,6 +19,14 @@
 		width: 100%;
 	
 		/* padding: 0 !important; */
+		color: #e4e6e5;
+}
+
+div.project {
+    width: 300px;
+    height: 300px;
+    display: inline-block;
+    margin: 40px;
 }
 
 .project img {
@@ -36,7 +43,11 @@
 		left: 0 !important;
 		margin: 0;
 		width: 100% !important;
-	}
+	
+		text-align: center;
+}
+
+.row {}
 	#projects .col-12 {
 		display: inline-block;
 		height: 451px;
@@ -46,7 +57,7 @@
 	#projects a,
 	#projects img {
 		display: inline-block;
-		height: 500px;
+		height: inherit;
 		margin: 0 auto;
 		width: 100%;
 	}
@@ -60,7 +71,9 @@
 
 #skills {
 		color: #e4e6e5;
-	}
+	
+		background-color: #000;
+}
 	.table-striped>#github-activity-body>tr:nth-of-type(odd) {
 		background-color: #2f2f2f;
 		color: #000;
@@ -69,15 +82,17 @@
 
 #education {
 		color: #e4e6e5;
-		background-color: #1D4F3F;
+		/* background-color: #1D4F3F; */
 	}
 
 #work {
-		background-color: #B06903;
-	}
+		background-color: #1D4F3F;
+	
+		color: #e4e6e5;
+}
 	#work .container .hr {
-		background-color: #292929;
-		color: #292929;
+		/* background-color: #292929; */
+		/* color: #292929; */
 	}
 
 #contact {
