@@ -17,8 +17,6 @@
 		padding: 0;
 		text-align: left;
 		width: 100%;
-	
-		/* padding: 0 !important; */
 		color: #e4e6e5;
 }
 
@@ -82,7 +80,6 @@ div.project {
 
 #education {
 		color: #e4e6e5;
-		/* background-color: #1D4F3F; */
 	}
 
 #work {
@@ -90,15 +87,11 @@ div.project {
 	
 		color: #e4e6e5;
 }
-	#work .container .hr {
-		/* background-color: #292929; */
-		/* color: #292929; */
-	}
 
 #contact {
 		background-color: #2f2f2f;
 		color: #e4e6e5;
-		padding-bottom: 350px;
+		padding-bottom: 150px;
 		padding-top: 90px;
 		text-align: center;
 	}
@@ -151,6 +144,41 @@ div.project {
 		font-weight: 400;
 	}
 
+/* Common styles */
+.nav li a i.fa { /* Icons next to nav bar links */
+	padding-right: 3px;
+}
+
+.title-row {
+	font-size: 40px;
+	padding-bottom: 35px;
+	padding-top: 20px;
+}
+
+.subtitle-row {
+	font-size: 30px;
+	padding-bottom: 20px;
+}
+
+.content-row {
+	padding-top: 45px;
+}
+
+.line-row .hr {
+		background-color: #e4e6e5;
+		height: 5px;
+		margin: 0 auto;
+		width: 33%;
+	}
+	.hr {
+		width: 50%;
+		margin: 0 auto;
+		background-color: #e4e6e5;
+		height: 5px;
+		margin-bottom: 15px;
+	}
+
+/* Font Sizing Syles */
 .xlarge {
 	font-size: 250%;
 }
@@ -169,38 +197,4 @@ div.project {
 
 .xsmall {
 	font-size: 50%;
-}
-
-.nav li a i.fa {
-	padding-right: 3px;
-}
-
-.title-row {
-	font-size: 40px;
-	padding-bottom: 35px;
-	padding-top: 20px;
-}
-
-.line-row .hr {
-	background-color: #e4e6e5;
-	height: 5px;
-	margin: 0 auto;
-	width: 33%;
-}
-
-.subtitle-row {
-	font-size: 30px;
-	padding-bottom: 20px;
-}
-
-.content-row {
-	padding-top: 45px;
-}
-
-.hr {
-    width: 50%;
-    margin: 0 auto;
-    background-color: #e4e6e5;
-    height: 5px;
-    margin-bottom: 15px;
 }
