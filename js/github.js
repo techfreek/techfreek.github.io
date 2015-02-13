@@ -84,6 +84,10 @@ function findActivity(uname, callback) {
 }
 
 function addActivity(activities) {
+	function convertAPIURI(uri) {
+		return uri.replace('api.', '').replace('repos/', '');
+	}
+
 	var table = document.getElementById('github-activity-body');
 
 	for(var i = 0; i < 5 && i < activities.length; i++) {
@@ -93,6 +97,7 @@ function addActivity(activities) {
 		
 		if(activity.type === "PushEvent") {
 			var refs = activity.payload.ref.split('/');
+			var url = convertAPIURI(activity.payload.commits[0].url);
 			if(activity.payload.commits[0].message.length > 50) {
 				activity.payload.commits[0].message =
 					activity.payload.commits[0].message.slice(0, 50) +
@@ -103,8 +108,7 @@ function addActivity(activities) {
 				" pushed to " +
 				refs[refs.length - 1] +
 				" at " +
-				activity.repo.name.link(activity.payload.commits[0].url
-					.replace('api.', '').replace('repos/', '')) +
+				activity.repo.name.link(url) +
 				'<br>' +
 				activity.payload.commits[0].message;
 		} else if(activity.type === "IssueCommentEvent") {
@@ -114,27 +118,30 @@ function addActivity(activities) {
 					'...';
 			}
 			
-			var issueComment = activity.repo.name + '#' + activity.payload.number;
+			var issueComment = activity.repo.name + '#' + activity.payload.issue.number;
+			var url = convertAPIURI(activity.payload.issue.html_url);
 
 			td.innerHTML = activity.actor.login +
 				" commented on issue " +
-				issueComment.link(activity.issue.html_url) +
+				issueComment.link(url) +
 				'<br>' +
 				activity.comment.body.message;
 		} else if(activity.type === "IssuesEvent") {
-			var issueComment = activity.repo.name + '#' + activity.payload.number;
+			var issueComment = activity.repo.name + '#' + activity.payload.issue.number;
+			var url = convertAPIURI(activity.payload.issue.html_url);
 
 			td.innerHTML = activity.actor.login +
 				" opened issue " +
-				issueComment.link(activity.issue.html_url) +
+				issueComment.link(url) +
 				'<br>' +
 				activity.payload.issue.title;
+
 		} else if(activity.type === "WatchEvent") {
 			td.innerHTML = activity.actor.login +
 				" starred " +
 				activity.repo.name.link('http://github.com/' + activity.repo.name);
 		} else if(activity.type === "CreateEvent") {
-			var url = activity.repo.url.replace('api.', '').replace('repos/', '');
+			var url = convertAPIURI(activity.repo.url);
 			var name = activity.repo.name;
 			var link = name.link(url);
 			console.log("URL: " + url);
