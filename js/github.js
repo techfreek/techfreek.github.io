@@ -112,9 +112,9 @@ function addActivity(activities) {
 				'<br>' +
 				activity.payload.commits[0].message;
 		} else if(activity.type === "IssueCommentEvent") {
-			if(activity.comment.body.length > 50) {
-				activity.comment.body.message =
-					activity.comment.body.message.slice(0, 50) +
+			if(activity.payload.comment.body.length > 50) {
+				activity.payload.comment.body =
+					activity.payload.comment.body.slice(0, 50) +
 					'...';
 			}
 			
@@ -125,7 +125,7 @@ function addActivity(activities) {
 				" commented on issue " +
 				issueComment.link(url) +
 				'<br>' +
-				activity.comment.body.message;
+				activity.payload.comment.body;
 		} else if(activity.type === "IssuesEvent") {
 			var issueComment = activity.repo.name + '#' + activity.payload.issue.number;
 			var url = convertAPIURI(activity.payload.issue.html_url);
