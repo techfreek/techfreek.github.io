@@ -185,12 +185,12 @@ jQuery(document).ready(function ($) {
 ******************/
 jQuery(document).ready(function ($) {
 	//Cache some variables
-	var images = $('#projects a');
+	var images = $('#projects .row a');
 	
 	images.hover(
 		function(e) {
 			var asta = $(this).find('img');
-			$('#projects img').not( asta ).stop(false, false).animate(
+			$('#projects .row a img').not( asta ).stop(false, false).animate(
 				{
 					opacity: .5
 				},
@@ -201,10 +201,14 @@ jQuery(document).ready(function ($) {
 			if ( $(this).hasClass('video') ) {
 				zoom.addClass('video');
 			}
+
+			zoom.width($(this).width());
+			zoom.height($(this).height());
+
 			$(this).prepend(zoom);
 		},
 		function(e) {
-			$('#projects img').stop(false, false).animate(
+			$('#projects .row a img').stop(false, false).animate(
 				{
 					opacity: 1
 				},

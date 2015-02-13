@@ -254,25 +254,8 @@ body {
 	background-image: url('../images/zoom.png');
 	background-position: center center;
 	background-repeat: no-repeat;
-	height: 100%;
-	left: 0;
 	position: absolute;
-	top: 0;
-	width: 100%;
 	z-index: 999;
-}
-
-#arrows {
-	bottom: 10%;
-	height: 80px;
-	position: fixed;
-	right: 10%;
-	width: 80px;
-	z-index: 1000;
-}
-
-#arrow-right.disabled {
-	background-position: 0 -90px;
 }
 
 .navigation-slide {
