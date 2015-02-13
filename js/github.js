@@ -133,6 +133,17 @@ function addActivity(activities) {
 			td.innerHTML = activity.actor.login +
 				" starred " +
 				activity.repo.name.link('http://github.com/' + activity.repo.name);
+		} else if(activity.type === "CreateEvent") {
+			var url = activity.repo.url.replace('api.', '').replace('repos/', '');
+			var name = activity.repo.name;
+			var link = name.link(url);
+			console.log("URL: " + url);
+			console.log("repo: " + name);
+			console.log("Link: " + link);
+
+			td.innerHTML = activity.actor.login +
+				" created repository " +
+				link;
 		}
 
 		row.appendChild(td);
