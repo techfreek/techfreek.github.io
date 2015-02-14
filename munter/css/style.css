@@ -185,7 +185,7 @@ body {
 	font-size: 25px;
 }
 
-#home-row-2 .col-12 {
+#home-row-2 .col-12.div {
 	height: 232px;
 	padding-top: 30px;
 }
@@ -194,12 +194,6 @@ body {
 	height: 166px;
 	overflow: hidden;
 	padding-top: 26px;
-	transition: all ease-in .5s;
-}
-
-#home-row-2 .col-12 .home-hover:hover {
-	height: 166px;
-	padding-top: 0;
 }
 
 @media (max-width: 767px) {

@@ -198,3 +198,42 @@ div.project {
 .xsmall {
 	font-size: 50%;
 }
+
+/* Mobile styles */
+@media (max-width: 767px) {
+	/* Change navbar font color so it's visible */
+	.navbar .nav a {
+		color: #5f5f5f;
+	}
+
+	/* decreasing spacing between cover hexagons */
+	#home-row-2 div {
+		height: 125px;
+	}
+
+	#home-row-2 .col-12 .home-hover {
+		height: 100px;
+	}
+
+	.home-hover.navigation-slide {
+		height: 75px;
+	}
+
+
+	/* Decrease vertical spacing btwn projects */
+	.row .project {
+		margin-top: 15px;
+		margin-bottom: 15px;
+	}
+
+	/* Adjust social media links so they are not squashed */ 
+	.links .social {
+		display: block;
+		width: 140px;
+		margin: 0 auto;
+		padding-top: 0px;
+	}
+	.social span .on-hover {
+		margin: 0 autp;
+	}
+}

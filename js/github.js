@@ -88,9 +88,18 @@ function addActivity(activities) {
 		return uri.replace('api.', '').replace('repos/', '');
 	}
 
+	function trimMSG(msg) {
+		if(typeof(msg) === "undefined") {
+			msg = "";
+		} else if(msg.length > 50) {
+				msg = msg.slice(0, 50) + '...';
+		}
+		return msg;
+	}
+
 	var table = document.getElementById('github-activity-body');
 
-	for(var i = 0; i < 5 && i < activities.length; i++) {
+	for(var i = 0; i < 6 && i < activities.length; i++) {
 		var activity = activities[i];
 		var row = document.createElement('tr');
 		var td = document.createElement('td');
@@ -98,11 +107,6 @@ function addActivity(activities) {
 		if(activity.type === "PushEvent") {
 			var refs = activity.payload.ref.split('/');
 			var url = convertAPIURI(activity.payload.commits[0].url);
-			if(activity.payload.commits[0].message.length > 50) {
-				activity.payload.commits[0].message =
-					activity.payload.commits[0].message.slice(0, 50) +
-					'...';
-			}
 
 			td.innerHTML = activity.actor.login +
 				" pushed to " +
@@ -110,14 +114,8 @@ function addActivity(activities) {
 				" at " +
 				activity.repo.name.link(url) +
 				'<br>' +
-				activity.payload.commits[0].message;
+				trimMSG(activity.payload.commits[0].message);
 		} else if(activity.type === "IssueCommentEvent") {
-			if(activity.payload.comment.body.length > 50) {
-				activity.payload.comment.body =
-					activity.payload.comment.body.slice(0, 50) +
-					'...';
-			}
-			
 			var issueComment = activity.repo.name + '#' + activity.payload.issue.number;
 			var url = convertAPIURI(activity.payload.issue.html_url);
 
@@ -125,7 +123,7 @@ function addActivity(activities) {
 				" commented on issue " +
 				issueComment.link(url) +
 				'<br>' +
-				activity.payload.comment.body;
+				trimMSG(activity.payload.comment.body);
 		} else if(activity.type === "IssuesEvent") {
 			var issueComment = activity.repo.name + '#' + activity.payload.issue.number;
 			var url = convertAPIURI(activity.payload.issue.html_url);
@@ -151,6 +149,15 @@ function addActivity(activities) {
 			td.innerHTML = activity.actor.login +
 				" created repository " +
 				link;
+		} else if(activity.type === "PullRequestEvent") {
+			var url = activity.payload.pull_request.html_url;
+			var name = activity.repo.name + '#' + activity.payload.pull_request.number;
+
+			td.innerHTML = activity.actor.login + 
+				" merged pull request " +
+				name.link(url) +
+				'<br>' + 
+				trimMSG(activity.payload.pull_request.body);
 		}
 
 		row.appendChild(td);

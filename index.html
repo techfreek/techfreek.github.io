@@ -26,14 +26,14 @@
 		<div class="container">
 		
 			<!-- .navbar-toggle is used as the toggle for collapsed navbar content -->
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+			<button type="button" id="navbar-button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
 			
 			
-			<div class="nav-collapse collapse navbar-responsive-collapse">
+			<div class="nav-collapse collapse navbar-responsive-collapse" id="nav-collapse">
 				<ul class="nav row">
 					<li data-slide="1" class="col-12 col-sm-2">
 						<a href="#cover"><i class="fa fa-home"></i><span class="text">HOME</span></a>
@@ -78,12 +78,21 @@
 				</div><!-- /col-12 -->
 			</div><!-- /row -->
 			<div id="home-row-2" class="row clearfix">
-				<div class="col-12 col-sm-4"><div class="home-hover navigation-slide" data-slide="6"><img src="munter/images/s02.png"></div><span>PROFESSIONAL</span></div>
-				<div class="col-12 col-sm-4"><div class="home-hover navigation-slide" data-slide="2"><img src="munter/images/s01.png"></div><span>FRIENDLY</span></div>
-				<div class="col-12 col-sm-4"><div class="home-hover navigation-slide" data-slide="5"><img src="munter/images/s03.png"></div><span>STUDENT</span></div>
-			</div><!-- /row -->
-		</div><!-- /container -->
-	</div><!-- /slide1 -->
+				<div class="col-12 col-sm-4"><div class="home-hover navigation-slide" data-slide="6">
+					<img src="munter/images/s02.png"></div>
+					<span>PROFESSIONAL</span>
+				</div>
+				<div class="col-12 col-sm-4"><div class="home-hover navigation-slide" data-slide="2">
+					<img src="munter/images/s01.png"></div>
+					<span>FRIENDLY</span>
+				</div>
+				<div class="col-12 col-sm-4"><div class="home-hover navigation-slide" data-slide="5">
+					<img src="munter/images/s03.png"></div>
+					<span>STUDENT</span>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- === About Me -->
 	<div class="slide story" id="about-me" data-slide="2">
@@ -207,11 +216,11 @@
 			<div class="hr">&nbsp;</div>
 
 			<div class="row">
-				<div class="col-6 font-light">
+				<div class="col-xs-12 col-sm-6 font-light">
 					<div class="row font-semibold large">Languages</div>
 					<div class="col-12" id="langs"></div>
 				</div>
-				<div class="col-6 font-light">
+				<div class="col-xs-12 col-sm-6 font-light">
 					<div class="row font-semibold large">Recent Activity</div>
 					<div class="col-12">
 							<table class="table table-striped" id="github-activity">
@@ -361,6 +370,18 @@
 			$("a.project").click(function(event) {
 				event.preventDefault();
 				openProjectView($(this));
+			});
+
+			$("#navbar-button").click(function(event) {
+				var navbar = $('#nav-collapse');
+				event.preventDefault();
+				var navOpen = navbar.hasClass('collapse');
+				if(navOpen) {
+					navbar.removeClass('collapse');
+					navbar.removeClass('in');
+				} else {
+					navbar.addClass('collapse');
+				}
 			});
 
 			/* Github stuff */
