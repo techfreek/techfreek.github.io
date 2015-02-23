@@ -1,3 +1,5 @@
+var maxProjects = 25;
+
 function loadRepos(uname, callback) {
 	var url = "https://api.github.com/users/" + uname + "/repos";
 	$.getJSON(url, callback);
@@ -36,36 +38,56 @@ function countLanguageUse(repos) {
 	return langs;
 }
 
-function addBars(languages) {
-	var langs = document.getElementById('langs');
-	var maxProjects = 20;
-	var objs = Object.keys(languages);
+function calculatePercent(langs) {
+	var objs = Object.keys(langs);
+	var temp = [];
+	for(var i = 0; i < objs.length; i++) {
+		langs[objs[i]].percent = ((langs[objs[i]].value / maxProjects) * 100);
+		langs[objs[i]].lang = objs[i];
+		temp.push(langs[objs[i]]);
+	}
 
-	objs.forEach(function(lang) {
-		if(lang === "null") {
+	console.log("typeof langs: " + JSON.stringify);
+
+	//It's hard to sort JSON, so this is an intermediate step
+	temp.sort(function(lang1, lang2) {
+		return lang1.percent < lang2.percent;
+	});
+	return temp;
+
+}
+
+function addBars(languages) {
+	languages = calculatePercent(languages);
+	var langs = document.getElementById('langs');
+	//var objs = Object.keys(languages);
+
+	languages.forEach(function(lang) {
+		if(lang.lang === "null") {
 			return;
 		}
+
+		console.log("lang: " + JSON.stringify(lang));
+
 		var row = document.createElement('div');
 		var language = document.createElement('div');
 		var wrapper = document.createElement('div');
 		var graph = document.createElement('div');
 		var innerGraph = document.createElement('span');
-		var percent = ((languages[lang].value / maxProjects) * 100);
-
-		innerGraph.innerHTML = languages[lang].count + ' project(s)';
+		innerGraph.innerHTML = lang.count + ' project(s)';
 		
 		graph.setAttribute('aria-valuemin', 0);
 		graph.setAttribute('aria-valuemax', maxProjects);
-		graph.setAttribute('aria-valuenow', languages[lang].count);
+		graph.setAttribute('aria-valuenow', lang.count);
 		graph.setAttribute('role', 'progressbar')
-		graph.style.width = percent + '%'; 
+		graph.style.width = lang.percent + '%'; 
 
 		graph.className = "col-9 progress-bar";
 
 		wrapper.className = "progress";
 
 		language.className = "col-3";
-		language.innerHTML = lang;
+		language.innerHTML = lang.lang;
 
 		row.className = "row";
 
