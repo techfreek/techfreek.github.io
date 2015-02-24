@@ -2,6 +2,31 @@
 	color: #fff;
 }
 
+.shield {
+		background-repeat: no-repeat;
+		width: 75px;
+		height: 75px;
+		background-position-x: 50%;
+		background-position-y: 50%;
+		margin: 0 auto;
+		font-weight: bolder;
+		font-size: 35px;
+		line-height: 75px;
+		text-shadow: 2px 2px #000;
+	}
+
+	.red.shield {
+		background-image: url('../munter/images/red.png');
+	}
+
+	.blue.shield {
+		background-image: url('../munter/images/blue.png');
+	}
+
+	.yellow.shield {
+		background-image: url('../munter/images/yellow.png');
+	}
+
 #about-me {
 		background-color: #34495e;
 		color: #e4e6e5;
@@ -21,21 +46,21 @@
 }
 
 div.project {
-    width: 300px;
-    height: 300px;
-    display: inline-block;
-    margin: 40px;
+	width: 300px;
+	height: 300px;
+	display: inline-block;
+	margin: 40px;
 }
 
 .project img {
-    height: 200px;
+	height: 200px;
 }
 
 #projects .col-lg-3,
 #projects .col-xs-12,
 #projects .col-sm-6 {
-    padding-right: 0 !important;
-    padding-left: 0 !important;
+	padding-right: 0 !important;
+	padding-left: 0 !important;
 }
 	#projects .row {
 		left: 0 !important;
