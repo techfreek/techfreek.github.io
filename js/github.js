@@ -214,7 +214,7 @@ function gitActivityBody(activity) {
 		data.link = activity.payload.repository.html_url;
 	
 	} else if(activity.type === "PullRequestEvent") {
-		data.action = " merged pull request ";
+		data.action = "merged pull request";
 		data.target = activity.repo.name + '#' + activity.payload.pull_request.number;
 		data.link = activity.payload.pull_request.html_url;
 		data.message = activity.payload.pull_request.body;
@@ -229,7 +229,7 @@ function gitActivityBody(activity) {
 
 	} else if(activity.type === "PushEvent") {
 		var refs = activity.payload.ref.split('/'); 
-		data.action = "pushed to" + refs[refs.length - 1] + " at ";
+		data.action = "pushed to " + refs[refs.length - 1] + " at ";
 		data.link = activity.payload.commits[0].url;
 		data.target = activity.repo.name;
 		data.message = activity.payload.commits[0].message;
