@@ -9,11 +9,11 @@ function openProjectView(project) {
 	var title = $(project).find("h3");
 	var caption = $(project).find("figcaption");
 	
-	console.log("github: " + $(project).attr("github"));
+	console.log("github: " + $(project).attr("data-github"));
 
-	options.github = $(project).attr("github") || null;
-	options.youtube = $(project).attr("youtube") || null;
-	options.link = $(project).attr("link") || null;
+	options.github = $(project).attr("data-github") || null;
+	options.youtube = $(project).attr("data-youtube") || null;
+	options.link = $(project).attr("data-link") || null;
 	
 	console.log("options: " + JSON.stringify(options));
 	createProjectModal(title.text(), caption.text(), img.attr("src"), options);
