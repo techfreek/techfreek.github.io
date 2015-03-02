@@ -36,6 +36,9 @@ function countLanguageUse(repos) {
 		} else if(repos[i].language === "JavaScript") {
 			//These repos usually have a lot of images
 			langs[repos[i].language].value /= 1.1;
+		} else if(repos[i].language === "HTML") {
+			//These repos usually have a lot of images
+			langs[repos[i].language].value /= 3;
 		}
 
 		if(langs[repos[i].language].value > maxProjects) {
@@ -54,7 +57,7 @@ function calculatePercent(langs) {
 		temp.push(langs[objs[i]]);
 	}
 
-	console.log("typeof langs: " + JSON.stringify);
+	//console.log("typeof langs: " + JSON.stringify);
 
 	//It's hard to sort JSON, so this is an intermediate step
 	temp.sort(function(lang1, lang2) {
@@ -173,20 +176,20 @@ function gitActivityBody(activity) {
 		data.action = "created repository";
 
 	} else if(activity.type === "DeleteEvent") {
-		data.action = "deleted " + action.payload.ref_type + " from";
+		data.action = "deleted " + activity.payload.ref_type + " from";
 		data.target = activity.repository.full_name;
 		data.link = activity.repository.html_url;
 
 	} else if(activity.type === "ForkEvent") {
 		data.action = "forked";
-		data.target = action.payload.forkee.full_name;
-		data.link = action.payload.forkee.html_url;
+		data.target = activity.payload.forkee.full_name;
+		data.link = activity.payload.forkee.html_url;
 
 	} else if(activity.type === "GollumEvent") {
-		data.action = "updated " + action.payload.repository.full_name 
+		data.action = "updated " + activity.payload.repository.full_name 
 			+ " wiki page";
-		data.target = action.payload.pages[0].page_name;
-		data.link = action.payload.pages[0].html_url;
+		data.target = activity.payload.pages[0].page_name;
+		data.link = activity.payload.pages[0].html_url;
 	} else if(activity.type === "IssueCommentEvent") {
 		var comment = activity.repo.name + "#" + activity.payload.issue.number;
 		
@@ -204,9 +207,9 @@ function gitActivityBody(activity) {
 		data.message = activity.payload.issue.title;
 
 	} else if(activity.type === "MemberEvent") {
-		data.action = action.payload.action + " to";
-		data.target = action.repository.full_name;
-		data.link = action.repository.html_url;
+		data.action = activity.payload.action + " to";
+		data.target = activity.repository.full_name;
+		data.link = activity.repository.html_url;
 
 	} else if(activity.type === "PublicEvent") {
 		data.action = "open sourced";
@@ -214,7 +217,7 @@ function gitActivityBody(activity) {
 		data.link = activity.payload.repository.html_url;
 	
 	} else if(activity.type === "PullRequestEvent") {
-		data.action = "merged pull request";
+		data.action = activity.payload.action + " pull request";
 		data.target = activity.repo.name + '#' + activity.payload.pull_request.number;
 		data.link = activity.payload.pull_request.html_url;
 		data.message = activity.payload.pull_request.body;
@@ -235,10 +238,10 @@ function gitActivityBody(activity) {
 		data.message = activity.payload.commits[0].message;
 
 	} else if(activity.type === "ReleaseEvent") {
-		data.action = action.payload.action + " " + action.payload.release.tag_name +
+		data.action = activity.payload.action + " " + activity.payload.release.tag_name +
 			" of";
-		data.link = action.payload.release.html_url;
-		data.target = action.payload.repository.full_name;
+		data.link = activity.payload.release.html_url;
+		data.target = activity.payload.repository.full_name;
 
 	} else if(activity.type === "WatchEvent") {
 		data.action = "starred";
