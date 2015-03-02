@@ -231,11 +231,6 @@ div.project {
 		color: #5f5f5f;
 	}
 
-	/* decreasing spacing between cover hexagons */
-	#home-row-2 div {
-		height: 125px;
-	}
-
 	#home-row-2 .col-12 .home-hover {
 		height: 100px;
 	}
