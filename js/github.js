@@ -1,4 +1,4 @@
-var maxProjects = 25;
+var maxProjects = 0;
 
 function loadRepos(uname, callback) {
 	var url = "https://api.github.com/users/" + uname + "/repos";
@@ -8,41 +8,23 @@ function loadRepos(uname, callback) {
 function countLanguageUse(repos) {
 	var langs = {
 		JavaScript: {
-			count: 2,
-			value: 4
+			count: 2
 		},
 		Arduino: {
 			count: 1,
-			value: 1
 		}
 	};
-	//These two start preset because of hidden repos
-
-	//console.log("Repos: " + JSON.stringify(repos));
 
 	for(var i = 0; i < repos.length; i++) {
 		if(typeof(langs[repos[i].language]) === 'undefined') {
 			langs[repos[i].language] = {};
 			langs[repos[i].language].count = 0;
-			langs[repos[i].language].value = 0;
 		}
+
 		langs[repos[i].language].count += 1;
 
-		langs[repos[i].language].value += Math.sqrt(repos[i].size) / 10;
-
-		if(repos[i].language === "C++") {
-			//I had a really old repo with all the debug files still in it. Hence the decrement
-			langs[repos[i].language].value /= 10;
-		} else if(repos[i].language === "JavaScript") {
-			//These repos usually have a lot of images
-			langs[repos[i].language].value /= 1.1;
-		} else if(repos[i].language === "HTML") {
-			//These repos usually have a lot of images
-			langs[repos[i].language].value /= 3;
-		}
-
-		if(langs[repos[i].language].value > maxProjects) {
-			maxProjects = langs[repos[i].language].value;
+		if(langs[repos[i].language].count > maxProjects) {
+			maxProjects = langs[repos[i].language].count;
 		}
 	}
 	return langs;
@@ -52,7 +34,7 @@ function calculatePercent(langs) {
 	var objs = Object.keys(langs);
 	var temp = [];
 	for(var i = 0; i < objs.length; i++) {
-		langs[objs[i]].percent = ((langs[objs[i]].value / maxProjects) * 100);
+		langs[objs[i]].percent = ((langs[objs[i]].count / maxProjects) * 100);
 		langs[objs[i]].lang = objs[i];
 		temp.push(langs[objs[i]]);
 	}
