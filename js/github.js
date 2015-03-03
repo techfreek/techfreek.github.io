@@ -147,8 +147,10 @@ function gitActivityBody(activity) {
 
 	if(activity.type === "CommitCommentEvent") {
 		data.action = "commented on commit";
-		data.link = 'http://github.com/' + activity.payload.repository.full_name;
-		data.target = activity.payload.repository.full_name
+		data.link = 'http://github.com/' + ( typeof(activity.payload.repository) === "undefined") ?
+				activity.repo.name :
+				activity.payload.repository.full_name;
+		data.target = data.link;
 		data.message = trimHash(activity.payload.comment.commit_id).link(activity.payload.comment.html_url) + ' ' +
 			 activity.payload.comment.body;
 
