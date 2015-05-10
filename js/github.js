@@ -1,4 +1,5 @@
 var maxProjects = 0;
+var maxActivity = 8;
 
 function loadRepos(uname, callback) {
 	var url = "https://api.github.com/users/" + uname + "/repos";
@@ -100,7 +101,7 @@ function findActivity(uname, callback) {
 function addActivity(activities) {
 	var table = document.getElementById('github-activity-body');
 
-	for(var i = 0; i < 6 && i < activities.length; i++) {
+	for(var i = 0; i < maxActivity && i < activities.length; i++) {
 		var activity = activities[i];
 		var row = document.createElement('tr');
 		var td = document.createElement('td');

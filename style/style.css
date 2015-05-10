@@ -33,7 +33,7 @@
 	}
 	blockquote.news {
 		background-color: rgba(47, 47, 47, 0.5);
-		#2f2f2f
+		border-left: none;
 	}
 
 #projects {
