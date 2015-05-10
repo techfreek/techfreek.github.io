@@ -161,7 +161,7 @@ function gitActivityBody(activity) {
 
 	} else if(activity.type === "DeleteEvent") {
 		data.action = "deleted " + activity.payload.ref_type + " from";
-		data.target = activity.repository.full_name;
+		data.target = activity.repo.name;
 		data.link = activity.repository.html_url;
 
 	} else if(activity.type === "ForkEvent") {
@@ -197,7 +197,7 @@ function gitActivityBody(activity) {
 
 	} else if(activity.type === "PublicEvent") {
 		data.action = "open sourced";
-		data.target = activity.payload.repository.full_name;
+		data.target = = activity.repo.name;
 		data.link = activity.payload.repository.html_url;
 	
 	} else if(activity.type === "PullRequestEvent") {
