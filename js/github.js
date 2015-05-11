@@ -106,15 +106,19 @@ function addActivity(activities) {
 		var row = document.createElement('tr');
 		var td = document.createElement('td');
 
-		var body = gitActivityBody(activity);
+		try {
+			var body = gitActivityBody(activity);
 
-		td.innerHTML = body.actor +
-			body.action + body.target.link(body.link) + '<br>';
-		if(body.message) {
-			td.innerHTML += body.message;
+			td.innerHTML = body.actor +
+				body.action + body.target.link(body.link) + '<br>';
+			if(body.message) {
+				td.innerHTML += body.message;
+			}
+		} catch(e) {
+			td.innerHTML = 'Error (' + activity.type + ')' + e;
 		}
-		
-		row.appendChild(td);
+
+ 		row.appendChild(td);
 		table.appendChild(row);
 	}
 
@@ -198,8 +202,8 @@ function gitActivityBody(activity) {
 
 	} else if(activity.type === "PublicEvent") {
 		data.action = "open sourced";
-		data.target = = activity.repo.name;
-		data.link = activity.payload.repository.html_url;
+		data.target = activity.repo.name;
+		data.link = convertAPIURI(activity.repo.url);
 	
 	} else if(activity.type === "PullRequestEvent") {
 		data.action = activity.payload.action + " pull request";
