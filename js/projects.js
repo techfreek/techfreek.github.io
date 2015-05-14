@@ -1,25 +1,33 @@
 function openProjectView(project) {
+	var jqProject = $(project);
+	var proj = jqProject.get(0);
 	var options = {
+		title: null,
 		youtube: null,
 		github: null,
-		link: null
+		link: null,
+		content: null,
+		img: null
 	}
 
-	var img = $(project).find("img");
-	var title = $(project).find("h3");
-	var caption = $(project).find("figcaption");
 	
-	console.log("github: " + $(project).attr("data-github"));
+	var title = jqProject.find("h3");
+	var caption = proj.getElementsByTagName("figcaption")[0];
+	
+	console.log("github: " + jqProject.attr("data-github"));
 
-	options.github = $(project).attr("data-github") || null;
-	options.youtube = $(project).attr("data-youtube") || null;
-	options.link = $(project).attr("data-link") || null;
-	
+	options.title = title.text();
+	options.github = jqProject.attr("data-github") || null;
+	options.youtube = jqProject.attr("data-youtube") || null;
+	options.link = jqProject.attr("data-link") || null;
+	options.content = caption.cloneNode(true);
+	options.img = jqProject.attr("data-img") || jqProject.find("img").attr("src");
+
 	console.log("options: " + JSON.stringify(options));
-	createProjectModal(title.text(), caption.text(), img.attr("src"), options);
+	createProjectModal(options);
 }
 
-function createProjectModal(ProjectTitle, caption, image, options) {
+function createProjectModal(options) {
 	var modal = $("#modal");
 	var header = modal.find(".modal-header");
 	var footer = modal.find(".modal-footer");
@@ -32,11 +40,12 @@ function createProjectModal(ProjectTitle, caption, image, options) {
 	var link = footer.find(".offsite");
 
 	//Create body of modal
-	img.attr("src", image);
-	bodyp.text(caption);
+	img.attr("src", options.img);
+	body.get(0).appendChild(options.content);
+	//bodyp.text(caption);
 
 	//create header of modal
-	title.text(ProjectTitle);
+	title.text(options.title);
 
 	//apply options
 	if(options.github) {
