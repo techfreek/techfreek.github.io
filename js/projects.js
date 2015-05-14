@@ -9,7 +9,6 @@ function openProjectView(project) {
 		content: null,
 		img: null
 	}
-
 	
 	var title = jqProject.find("h3");
 	var caption = proj.getElementsByTagName("figcaption")[0];
@@ -23,7 +22,7 @@ function openProjectView(project) {
 	options.content = caption.cloneNode(true);
 	options.img = jqProject.attr("data-img") || jqProject.find("img").attr("src");
 
-	console.log("options: " + JSON.stringify(options));
+	//console.log("options: " + JSON.stringify(options));
 	createProjectModal(options);
 }
 
@@ -38,10 +37,37 @@ function createProjectModal(options) {
 	var github = footer.find(".github");
 	var youtube = footer.find(".youtube");
 	var link = footer.find(".offsite");
+	var bodyLink = null;
+	var cap = null;
+	var nLink = null;
+
+	//remove caption if it exists
+	cap = body.get(0).getElementsByTagName("figcaption")[0];
+	if(cap) {
+		cap.parentNode.removeChild(cap);
+	}
+
 
 	//Create body of modal
 	img.attr("src", options.img);
 	body.get(0).appendChild(options.content);
+
+	bodyLink = body.get(0).getElementsByTagName("span")[0];
+
+	//convert all span links to a links
+	while(bodyLink) {
+		nLink = document.createElement("a");
+		nLink.href = $(bodyLink).attr("data-href");
+		nLink.innerHTML = bodyLink.innerHTML;
+
+		//insert real link after span link
+		$(nLink).insertAfter(bodyLink);
+
+		//remove span link
+		bodyLink.parentNode.removeChild(bodyLink);
+		bodyLink = body.get(0).getElementsByTagName("span")[0];
+	}
+
 	//bodyp.text(caption);
 
 	//create header of modal
