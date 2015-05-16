@@ -1,5 +1,5 @@
 var maxProjects = 0;
-var maxActivity = 8;
+var maxActivity = 7;
 
 function loadRepos(uname, callback) {
 	var url = "https://api.github.com/users/" + uname + "/repos";
