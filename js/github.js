@@ -150,92 +150,111 @@ function gitActivityBody(activity) {
 		link: ''
 	}
 
-	if(activity.type === "CommitCommentEvent") {
-		data.action = "commented on commit";
-		data.link = 'http://github.com/' + ( typeof(activity.payload.repository) === "undefined") ?
-				activity.repo.name :
-				activity.payload.repository.full_name;
-		data.target = data.link;
-		data.message = trimHash(activity.payload.comment.commit_id).link(activity.payload.comment.html_url) + ' ' +
-			 activity.payload.comment.body;
+	switch(activity.type) {
+		case "CommitCommentEvent":
+			data.action = "commented on commit";
+			data.link = 'http://github.com/' + ( typeof(activity.payload.repository) === "undefined") ?
+					activity.repo.name :
+					activity.payload.repository.full_name;
+			data.target = data.link;
+			data.message = trimHash(activity.payload.comment.commit_id).link(activity.payload.comment.html_url) + ' ' +
+				 activity.payload.comment.body;
+			break;
 
-	} else if(activity.type === "CreateEvent") {
-		data.link = activity.repo.url;
-		data.target = activity.repo.name;
-		data.action = "created repository";
+		case "CreateEvent":
+			data.link = activity.repo.url;
+			data.target = activity.repo.name;
+			data.action = "created repository";
+			break;
 
-	} else if(activity.type === "DeleteEvent") {
-		data.action = "deleted " + activity.payload.ref_type + " from";
-		data.target = activity.repo.name;
-		data.link = activity.repository.html_url;
+		case "DeleteEvent":
+			data.action = "deleted " + activity.payload.ref_type + " from";
+			data.target = activity.repo.name;
+			data.link = activity.repository.html_url;
+			break;
 
-	} else if(activity.type === "ForkEvent") {
-		data.action = "forked";
-		data.target = activity.payload.forkee.full_name;
-		data.link = activity.payload.forkee.html_url;
+		case "ForkEvent":
+			data.action = "forked";
+			data.target = activity.repo.name;
+			data.link = convertAPIURI(activity.repo.url);
+			break;
 
-	} else if(activity.type === "GollumEvent") {
-		data.action = "updated " + activity.payload.repository.full_name 
-			+ " wiki page";
-		data.target = activity.payload.pages[0].page_name;
-		data.link = activity.payload.pages[0].html_url;
-	} else if(activity.type === "IssueCommentEvent") {
-		var comment = activity.repo.name + "#" + activity.payload.issue.number;
-		
-		data.link = activity.payload.issue.html_url;
-		data.action = "commented on issue";
-		data.target = comment;
-		data.message = activity.payload.comment.body;
+		case "GollumEvent":
+			data.action = "updated " + activity.payload.repository.full_name 
+				+ " wiki page";
+			data.target = activity.payload.pages[0].page_name;
+			data.link = activity.payload.pages[0].html_url;
+			break;
 
-	} else if(activity.type === "IssuesEvent") {
-		var issue = activity.repo.name + "#" + activity.payload.issue.number;
+		case "IssueCommentEvent":
+			var comment = activity.repo.name + "#" + activity.payload.issue.number;
+			
+			data.link = activity.payload.issue.html_url;
+			data.action = "commented on issue";
+			data.target = comment;
+			data.message = activity.payload.comment.body;
+			break;
 
-		data.action = "opened issue";
-		data.target = issue;
-		data.link = activity.payload.issue.html_url;
-		data.message = activity.payload.issue.title;
+		case "IssuesEvent":
+			var issue = activity.repo.name + "#" + activity.payload.issue.number;
 
-	} else if(activity.type === "MemberEvent") {
-		data.action = activity.payload.action + " to";
-		data.target = activity.repository.full_name;
-		data.link = activity.repository.html_url;
+			data.action = "opened issue";
+			data.target = issue;
+			data.link = activity.payload.issue.html_url;
+			data.message = activity.payload.issue.title;
+			break;
 
-	} else if(activity.type === "PublicEvent") {
-		data.action = "open sourced";
-		data.target = activity.repo.name;
-		data.link = convertAPIURI(activity.repo.url);
-	
-	} else if(activity.type === "PullRequestEvent") {
-		data.action = activity.payload.action + " pull request";
-		data.target = activity.repo.name + '#' + activity.payload.pull_request.number;
-		data.link = activity.payload.pull_request.html_url;
-		data.message = activity.payload.pull_request.body;
+		case "MemberEvent":
+			data.action = activity.payload.action + " to";
+			data.target = activity.repository.full_name;
+			data.link = activity.repository.html_url;
+			break;
 
-	} else if(activity.type === "PullRequestReviewCommentEvent") {
-		data.action = "commented on pull request"
-		data.target = activity.payload.repo.full_name + '#' + 
-			activity.payload.pull_request.number;
-		data.link = activity.payload.comment.html_url;
+		case "PublicEvent":
+			data.action = "open sourced";
+			data.target = activity.repo.name;
+			data.link = convertAPIURI(activity.repo.url);
+			break;
 
-		data.message = activity.payload.comment.body;
+		case "PullRequestEvent":
+			data.action = activity.payload.action + " pull request";
+			data.target = activity.repo.name + '#' + activity.payload.pull_request.number;
+			data.link = activity.payload.pull_request.html_url;
+			data.message = activity.payload.pull_request.body;
+			break;
 
-	} else if(activity.type === "PushEvent") {
-		var refs = activity.payload.ref.split('/'); 
-		data.action = "pushed to " + refs[refs.length - 1] + " at ";
-		data.link = activity.payload.commits[0].url;
-		data.target = activity.repo.name;
-		data.message = activity.payload.commits[0].message;
+		case "PullRequestReviewCommentEvent":
+			data.action = "commented on pull request"
+			data.target = activity.payload.repo.full_name + '#' + 
+				activity.payload.pull_request.number;
+			data.link = activity.payload.comment.html_url;
 
-	} else if(activity.type === "ReleaseEvent") {
-		data.action = activity.payload.action + " " + activity.payload.release.tag_name +
-			" of";
-		data.link = activity.payload.release.html_url;
-		data.target = activity.payload.repository.full_name;
+			data.message = activity.payload.comment.body;
+			break;
 
-	} else if(activity.type === "WatchEvent") {
-		data.action = "starred";
-		data.link = 'http://github.com/' + activity.repo.name;
-		data.target = activity.repo.name;
+		case "PushEvent":
+			var refs = activity.payload.ref.split('/'); 
+			data.action = "pushed to " + refs[refs.length - 1] + " at ";
+			data.link = activity.payload.commits[0].url;
+			data.target = activity.repo.name;
+			data.message = activity.payload.commits[0].message;
+			break;
+
+		case "ReleaseEvent":
+			data.action = activity.payload.action + " " + activity.payload.release.tag_name +
+				" of";
+			data.link = activity.payload.release.html_url;
+			data.target = activity.payload.repository.full_name;
+			break;
+
+		case "WatchEvent":
+			data.action = "starred";
+			data.link = 'http://github.com/' + activity.repo.name;
+			data.target = activity.repo.name;
+			break;
+		default:
+			data.action = "did something";
+			break;
 	}
 
 	//apply at the end so you I don't have to do in each activity type
