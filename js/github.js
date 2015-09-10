@@ -1,5 +1,6 @@
 var maxProjects = 0;
 var maxActivity = 7;
+var maxLanguages = 9;
 
 function loadRepos(uname, callback) {
 	var url = "https://api.github.com/users/" + uname + "/repos";
@@ -32,6 +33,10 @@ function countLanguageUse(repos) {
 }
 
 function calculatePercent(langs) {
+	function filterNullLangs(language) {
+		return language.lang !== "null";
+	}
+	
 	var objs = Object.keys(langs);
 	var temp = [];
 	for(var i = 0; i < objs.length; i++) {
@@ -40,12 +45,11 @@ function calculatePercent(langs) {
 		temp.push(langs[objs[i]]);
 	}
 
-	//console.log("typeof langs: " + JSON.stringify);
-
-	//It's hard to sort JSON, so this is an intermediate step
 	temp.sort(function(lang1, lang2) {
 		return lang1.percent < lang2.percent;
 	});
+	temp = temp.filter(filterNullLangs);
+	temp = temp.slice(0, maxLanguages);
 	return temp;
 
 }
@@ -56,10 +60,6 @@ function addBars(languages) {
 	//var objs = Object.keys(languages);
 
 	languages.forEach(function(lang) {
-		if(lang.lang === "null") {
-			return;
-		}
-
 		console.log("lang: " + JSON.stringify(lang));
 
 		var row = document.createElement('div');
