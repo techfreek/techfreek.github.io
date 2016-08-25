@@ -286,21 +286,22 @@
 
 			<div class="row">
 				<div class="col-12 subtitle-row">
+					<div class="col-12 font-semibold">EMC Isilon</div>
+					<div class="col-12 font-thin">Software Engineer - June 2015 -> Presenet</div>
+				</div>
+				<p class="big">
+					Work on File Sharing Protocol middleware, amongst other things.
+				</p>
+			</div>
+
+			<div class="row">
+				<div class="col-12 subtitle-row">
 					<div class="col-12 font-semibold">Washington State University</div>
 					<div class="col-12 font-light">Civil &amp; Environmental Engineering</div>
 					<div class="col-12 font-thin">Technical Assistant 2 - March 2014 -> May 2015</div>
 				</div>
 				<p class="big">
 					Maintain undergraduate and graduate computer labs and provide support to faculty and staff as needed. Developed new websites for the department that meet university design practices, and developed tools to help monitor undergrad computer labs.
-				</p>
-			</div>
-
-			<div class="row">
-				<div class="col-12 subtitle-row">
-					<div class="col-12 font-semibold">Lake Washington School District</div>
-					<div class="col-12 font-thin">Overhire Theater Technician - February 2009 -> Present</div>
-				</div>
-				<p class="big">
 				</p>
 			</div>
 
@@ -408,12 +409,13 @@
 			});
 
 			/* Github stuff */
-			loadRepos('techfreek', function(repos) {
-				addBars(countLanguageUse(repos));
+			var username = 'techfreek';
+			loadRepos(username, function(repos) {
+				addBars(username, countLanguageUse(repos));
 			});
 
-			findActivity('techfreek', function(activities) {
-				addActivity(activities);
+			findActivity(username, function(activities) {
+				addActivity(username, activities);
 			});
 		});
 	</script>

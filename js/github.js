@@ -36,7 +36,7 @@ function calculatePercent(langs) {
 	function filterNullLangs(language) {
 		return language.lang !== "null";
 	}
-	
+
 	var objs = Object.keys(langs);
 	var temp = [];
 	for(var i = 0; i < objs.length; i++) {
@@ -45,19 +45,22 @@ function calculatePercent(langs) {
 		temp.push(langs[objs[i]]);
 	}
 
-	temp.sort(function(lang1, lang2) {
-		return lang1.percent < lang2.percent;
-	});
 	temp = temp.filter(filterNullLangs);
+
+	temp.sort(function(lang1, lang2) {
+		return lang1.count < lang2.count;
+	});
+
 	temp = temp.slice(0, maxLanguages);
 	return temp;
 
 }
 
-function addBars(languages) {
+function addBars(username, languages) {
 	languages = calculatePercent(languages);
 	var langs = document.getElementById('langs');
-	//var objs = Object.keys(languages);
+	var languageLink = "https://github.com/search?q=user%3A" +
+		username +"+language%3A";
 
 	languages.forEach(function(lang) {
 		console.log("lang: " + JSON.stringify(lang));
@@ -68,19 +71,19 @@ function addBars(languages) {
 		var graph = document.createElement('div');
 		var innerGraph = document.createElement('span');
 		innerGraph.innerHTML = lang.count + ' project(s)';
-		
+
 		graph.setAttribute('aria-valuemin', 0);
 		graph.setAttribute('aria-valuemax', maxProjects);
 		graph.setAttribute('aria-valuenow', lang.count);
 		graph.setAttribute('role', 'progressbar')
-		graph.style.width = lang.percent + '%'; 
+		graph.style.width = lang.percent + '%';
 
 		graph.className = "col-9 progress-bar";
 
 		wrapper.className = "progress";
 
 		language.className = "col-3";
-		language.innerHTML = lang.lang;
+		language.innerHTML = lang.lang.link(languageLink + encodeURIComponent(lang.lang));
 
 		row.className = "row";
 
@@ -98,30 +101,40 @@ function findActivity(uname, callback) {
 	$.getJSON(url, callback);
 }
 
-function addActivity(activities) {
+function addActivity(username, activities) {
 	var table = document.getElementById('github-activity-body');
+	var activity = null;
+	var row = null;
+	var td = null;
+	var body = null;
 
 	for(var i = 0; i < maxActivity && i < activities.length; i++) {
-		var activity = activities[i];
-		var row = document.createElement('tr');
-		var td = document.createElement('td');
+		activity = activities[i];
+		console.log(activity);
+		row = document.createElement('tr');
+		td = document.createElement('td');
 
-		try {
-			var body = gitActivityBody(activity);
+		body = gitActivityBody(activity);
 
-			td.innerHTML = body.actor +
-				body.action + body.target.link(body.link) + '<br>';
+		if(body) {
+			td.innerHTML = body.actor + body.action;
+
+			if(body.link) {
+				td.innerHTML += body.target.link(body.link) + '<br>';
+			} else {
+				td.innerHTML += body.target + '<br>';
+			}
+
 			if(body.message) {
 				td.innerHTML += body.message;
 			}
-		} catch(e) {
-			td.innerHTML = 'Error (' + activity.type + ')' + e;
+		} else {
+			td.innerHTML = 'Error (' + activity.type + ')';
 		}
 
- 		row.appendChild(td);
+		row.appendChild(td);
 		table.appendChild(row);
 	}
-
 }
 
 function gitActivityBody(activity) {
@@ -150,117 +163,130 @@ function gitActivityBody(activity) {
 		link: ''
 	}
 
-	switch(activity.type) {
-		case "CommitCommentEvent":
-			data.action = "commented on commit";
-			data.link = 'http://github.com/' + ( typeof(activity.payload.repository) === "undefined") ?
-					activity.repo.name :
-					activity.payload.repository.full_name;
-			data.target = data.link;
-			data.message = trimHash(activity.payload.comment.commit_id).link(activity.payload.comment.html_url) + ' ' +
-				 activity.payload.comment.body;
-			break;
+	try {
+		switch(activity.type) {
+			case "CommitCommentEvent":
+				data.action = "commented on commit";
+				data.link = 'http://github.com/' + ( typeof(activity.payload.repository) === "undefined") ?
+						activity.repo.name :
+						activity.payload.repository.full_name;
+				data.target = data.link;
+				data.message = trimHash(activity.payload.comment.commit_id).link(activity.payload.comment.html_url) + ' ' +
+					 activity.payload.comment.body;
+				break;
 
-		case "CreateEvent":
-			data.link = activity.repo.url;
-			data.target = activity.repo.name;
-			data.action = "created repository";
-			break;
+			case "CreateEvent":
+				if(activity.payload.ref_type === 'branch') {
+					data.action = "created branch \"" + activity.payload.ref + "\"";
+				} else if(activity.payload.ref_type === 'repository') {
+					data.action = "created repository";
+				} else {
+					data.activity = "created something";
+				}
 
-		case "DeleteEvent":
-			data.action = "deleted " + activity.payload.ref_type + " from";
-			data.target = activity.repo.name;
-			data.link = activity.repository.html_url;
-			break;
+				data.target = activity.repo.name;
+				data.link = activity.repo.url;
+				break;
 
-		case "ForkEvent":
-			data.action = "forked";
-			data.target = activity.repo.name;
-			data.link = convertAPIURI(activity.repo.url);
-			break;
+			case "DeleteEvent":
+				data.action = "deleted " + activity.payload.ref_type + " \"" + activity.payload.ref + "\" from";
+				data.target = activity.repo.name;
+				data.link = convertAPIURI(activity.repo.url);
+				break;
 
-		case "GollumEvent":
-			data.action = "updated " + activity.payload.repository.full_name 
-				+ " wiki page";
-			data.target = activity.payload.pages[0].page_name;
-			data.link = activity.payload.pages[0].html_url;
-			break;
+			case "ForkEvent":
+				data.action = "forked";
+				data.target = activity.repo.name;
+				data.link = convertAPIURI(activity.repo.url);
+				break;
 
-		case "IssueCommentEvent":
-			var comment = activity.repo.name + "#" + activity.payload.issue.number;
-			
-			data.link = activity.payload.issue.html_url;
-			data.action = "commented on issue";
-			data.target = comment;
-			data.message = activity.payload.comment.body;
-			break;
+			case "GollumEvent":
+				data.action = "updated " + activity.payload.repository.full_name + " wiki page";
+				data.target = activity.payload.pages[0].page_name;
+				data.link = activity.payload.pages[0].html_url;
+				break;
 
-		case "IssuesEvent":
-			var issue = activity.repo.name + "#" + activity.payload.issue.number;
+			case "IssueCommentEvent":
+				var comment = activity.repo.name + "#" + activity.payload.issue.number;
+				data.link = activity.payload.issue.html_url;
+				data.action = "commented on issue";
+				data.target = comment;
+				data.message = activity.payload.comment.body;
+				break;
 
-			data.action = "opened issue";
-			data.target = issue;
-			data.link = activity.payload.issue.html_url;
-			data.message = activity.payload.issue.title;
-			break;
+			case "IssuesEvent":
+				var issue = activity.repo.name + "#" + activity.payload.issue.number;
+				data.action = "opened issue";
+				data.target = issue;
+				data.link = activity.payload.issue.html_url;
+				data.message = activity.payload.issue.title;
+				break;
 
-		case "MemberEvent":
-			data.action = activity.payload.action + " to";
-			data.target = activity.repository.full_name;
-			data.link = activity.repository.html_url;
-			break;
+			case "MemberEvent":
+				data.action = activity.payload.action + " to";
+				data.target = activity.repository.full_name;
+				data.link = activity.repository.html_url;
+				break;
 
-		case "PublicEvent":
-			data.action = "open sourced";
-			data.target = activity.repo.name;
-			data.link = convertAPIURI(activity.repo.url);
-			break;
+			case "PublicEvent":
+				data.action = "open sourced";
+				data.target = activity.repo.name;
+				data.link = convertAPIURI(activity.repo.url);
+				break;
 
-		case "PullRequestEvent":
-			data.action = activity.payload.action + " pull request";
-			data.target = activity.repo.name + '#' + activity.payload.pull_request.number;
-			data.link = activity.payload.pull_request.html_url;
-			data.message = activity.payload.pull_request.body;
-			break;
+			case "PullRequestEvent":
+				data.action = activity.payload.action + " pull request";
+				data.target = activity.repo.name + '#' + activity.payload.pull_request.number;
+				data.link = activity.payload.pull_request.html_url;
+				data.message = activity.payload.pull_request.body;
+				break;
 
-		case "PullRequestReviewCommentEvent":
-			data.action = "commented on pull request"
-			data.target = activity.payload.repo.full_name + '#' + 
-				activity.payload.pull_request.number;
-			data.link = activity.payload.comment.html_url;
+			case "PullRequestReviewCommentEvent":
+				data.action = "commented on pull request"
+				data.target = activity.payload.repo.full_name + '#' +
+					activity.payload.pull_request.number;
+				data.link = activity.payload.comment.html_url;
 
-			data.message = activity.payload.comment.body;
-			break;
+				data.message = activity.payload.comment.body;
+				break;
 
-		case "PushEvent":
-			var refs = activity.payload.ref.split('/'); 
-			data.action = "pushed to " + refs[refs.length - 1] + " at ";
-			data.link = activity.payload.commits[0].url;
-			data.target = activity.repo.name;
-			data.message = activity.payload.commits[0].message;
-			break;
+			case "PushEvent":
+				var refs = activity.payload.ref.split('/');
+				data.action = "pushed to " + refs[refs.length - 1] + " at ";
+				data.link = activity.payload.commits[0].url;
+				data.target = activity.repo.name;
+				data.message = activity.payload.commits[0].message;
+				break;
 
-		case "ReleaseEvent":
-			data.action = activity.payload.action + " " + activity.payload.release.tag_name +
-				" of";
-			data.link = activity.payload.release.html_url;
-			data.target = activity.payload.repository.full_name;
-			break;
+			case "ReleaseEvent":
+				data.action = activity.payload.action + " " + activity.payload.release.tag_name + " of";
+				data.link = activity.payload.release.html_url;
+				data.target = activity.payload.repository.full_name;
+				break;
 
-		case "WatchEvent":
-			data.action = "starred";
-			data.link = 'http://github.com/' + activity.repo.name;
-			data.target = activity.repo.name;
-			break;
-		default:
-			data.action = "did something";
-			break;
+			case "WatchEvent":
+				data.action = "starred";
+				data.link = 'http://github.com/' + activity.repo.name;
+				data.target = activity.repo.name;
+				break;
+
+			default:
+				data.action = "did something relating to " + activity.type;
+				break;
+		}
+
+		//apply at the end so you I don't have to do in each activity type
+		data.action = " " + data.action + " ";
+		if(data.link) {
+			data.link = convertAPIURI(data.link);
+		}
+		data.message = trimMSG(data.message);
+	} catch(err) {
+		data = null;
+		console.log(activity);
+		console.log(data);
+		console.log(err);
 	}
-
-	//apply at the end so you I don't have to do in each activity type
-	data.action = " " + data.action + " ";
-	data.link = convertAPIURI(data.link);
-	data.message = trimMSG(data.message);
 
 	return data;
 }
