@@ -111,12 +111,13 @@ function addActivity(username, activities) {
 	for(var i = 0; i < maxActivity && i < activities.length; i++) {
 		activity = activities[i];
 		console.log(activity);
-		row = document.createElement('tr');
-		td = document.createElement('td');
 
 		body = gitActivityBody(activity);
 
 		if(body) {
+			row = document.createElement('tr');
+			td = document.createElement('td');
+
 			td.innerHTML = body.actor + body.action;
 
 			if(body.link) {
@@ -128,12 +129,10 @@ function addActivity(username, activities) {
 			if(body.message) {
 				td.innerHTML += body.message;
 			}
-		} else {
-			td.innerHTML = 'Error (' + activity.type + ')';
-		}
 
-		row.appendChild(td);
-		table.appendChild(row);
+			row.appendChild(td);
+			table.appendChild(row);
+		}
 	}
 }
 
@@ -243,7 +242,7 @@ function gitActivityBody(activity) {
 
 			case "PullRequestReviewCommentEvent":
 				data.action = "commented on pull request"
-				data.target = activity.payload.repo.full_name + '#' +
+				data.target = activity.repo.name + '#' +
 					activity.payload.pull_request.number;
 				data.link = activity.payload.comment.html_url;
 
@@ -261,7 +260,9 @@ function gitActivityBody(activity) {
 			case "ReleaseEvent":
 				data.action = activity.payload.action + " " + activity.payload.release.tag_name + " of";
 				data.link = activity.payload.release.html_url;
-				data.target = activity.payload.repository.full_name;
+				data.target = activity.repo.name;
+
+				data.message = activity.payload.release.body;
 				break;
 
 			case "WatchEvent":
@@ -275,6 +276,10 @@ function gitActivityBody(activity) {
 				break;
 		}
 
+		if (!data.action) {
+			return null;
+		}
+
 		//apply at the end so you I don't have to do in each activity type
 		data.action = " " + data.action + " ";
 		if(data.link) {
@@ -282,10 +287,10 @@ function gitActivityBody(activity) {
 		}
 		data.message = trimMSG(data.message);
 	} catch(err) {
-		data = null;
 		console.log(activity);
 		console.log(data);
 		console.log(err);
+		data = null;
 	}
 
 	return data;
