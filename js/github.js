@@ -56,6 +56,13 @@ function calculatePercent(langs) {
 
 }
 
+function formatLanguageLink(uname, language) {
+	var languageLink = "https://github.com/search?q=user%3A";
+	languageLink += `${uname}language%3A${encodeURIComponent(language)}`;
+	languageLink += "&type=repositories`;
+	return languageLink
+}
+
 function addBars(username, languages) {
 	languages = calculatePercent(languages);
 	var langs = document.getElementById('langs');
@@ -83,7 +90,7 @@ function addBars(username, languages) {
 		wrapper.className = "progress";
 
 		language.className = "col-3";
-		language.innerHTML = lang.lang.link(languageLink + encodeURIComponent(lang.lang));
+		language.innerHTML = lang.lang.link(formatLanguageLink(username, lang.lang));
 
 		row.className = "row";
 
