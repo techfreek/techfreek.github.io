@@ -59,7 +59,7 @@ function calculatePercent(langs) {
 function formatLanguageLink(uname, language) {
 	var languageLink = "https://github.com/search?q=user%3A";
 	languageLink += `${uname}language%3A${encodeURIComponent(language)}`;
-	languageLink += "&type=repositories`;
+	languageLink += "&type=repositories";
 	return languageLink
 }
 
